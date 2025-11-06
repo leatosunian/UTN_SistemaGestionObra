@@ -91,7 +91,7 @@ public class Main {
                         app.setObras(listaObras);
                         System.out.println("Obra '" + nuevaObra.getNombre() + "' creada correctamente.\n");
                     } else {
-                        System.out.println("Error al crear la obra.\n");
+                        throw new ObraInexistenteException("Error al crear la obra.\n");
                     }
 
                     break;
@@ -121,8 +121,7 @@ public class Main {
 
                     // si la obra no existe, mostrar mensaje de error
                     if (obra == null) {
-                        new ObraInexistenteException("La obra '" + nombreObra + "' no existe.\n");
-                        break;
+                        throw new ObraInexistenteException("La obra '" + nombreObra + "' no existe.\n");
                     } else {
                         // crear nuevo material
                         Material nuevoMaterial = materialHandler.crearMaterial();
@@ -144,6 +143,12 @@ public class Main {
                 case 5:
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
+                    Obra o = listaObras.getFirst();
+                    MaterialHandler<Material> m = m.setListaMateriales(o.getMateriales());
+                    for (Material ma : m){
+                        System.out.println(ma.getNombre());
+                    }
+                    m.buscarMaterialPorNombre(scanner.nextLine().trim());
 
                     break;
                 case 6:

@@ -22,9 +22,9 @@ public class ObraHandler {
         obra.setDescripcion(descripcion);
         obra.setUbicacion(ubicacion);
 
-        obra.setMateriales(new ArrayList<>());
+        obra.setMateriales(new MaterialHandler<>());
         obra.setCertificados(new ArrayList<>());
-        obra.setProveedores(new ArrayList<>());
+
 
         return obra;
     }

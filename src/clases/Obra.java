@@ -1,5 +1,7 @@
 package clases;
 
+import clases.handlers.MaterialHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,32 +9,26 @@ public class Obra {
     private String nombre;
     private String descripcion;
     private String ubicacion;
-    private List<Material> materiales;
-    private List<Proveedor> proveedores;
+    private MaterialHandler<Material> materiales;
+
     private List<CertificadoAvance> certificados;
 
     // constructor
     public Obra() {
-        this.materiales = new ArrayList<>();
-        this.proveedores = new ArrayList<>();
+        this.materiales = new MaterialHandler<>();
+
         this.certificados = new ArrayList<>();
     }
 
     // getters y setters
-    public List<Material> getMateriales() {
+
+
+    public MaterialHandler<Material> getMateriales() {
         return materiales;
     }
 
-    public void setMateriales(List<Material> materiales) {
+    public void setMateriales(MaterialHandler<Material> materiales) {
         this.materiales = materiales;
-    }
-
-    public List<Proveedor> getProveedores() {
-        return proveedores;
-    }
-
-    public void setProveedores(List<Proveedor> proveedores) {
-        this.proveedores = proveedores;
     }
 
     public List<CertificadoAvance> getCertificados() {
@@ -69,7 +65,7 @@ public class Obra {
 
     // Agregar material
     public void agregarMaterial(Material material) {
-        this.materiales.add(material);
+        this.materiales.agregarMaterial(material);
         System.out.println("Material agregado correctamente.\n");
     }
 

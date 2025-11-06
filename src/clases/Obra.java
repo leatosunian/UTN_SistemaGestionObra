@@ -63,10 +63,7 @@ public class Obra {
         this.certificados = certificados;
     }
 
-    // Agregar material
-    public void agregarMaterial(Material material) {
-        this.materiales.agregarMaterial(material);
-        System.out.println("Material agregado correctamente.\n");
-    }
+
+
 
 }

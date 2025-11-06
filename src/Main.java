@@ -4,6 +4,7 @@ import clases.Obra;
 import clases.exceptions.obraException.ObraInexistenteException;
 import clases.handlers.MaterialHandler;
 import clases.handlers.ObraHandler;
+import clases.handlersConsola.Inventario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Main {
         System.out.println("\n===== SISTEMA DE GESTIÓN DE OBRA ===== \n");
 
         do {
+
             System.out.println("===== MENÚ PRINCIPAL =====");
             System.out.println("1. Ingresar como Administrador");
             System.out.println("2. Ingresar como Usuario de Obra");
@@ -124,10 +126,10 @@ public class Main {
                         throw new ObraInexistenteException("La obra '" + nombreObra + "' no existe.\n");
                     } else {
                         // crear nuevo material
-                        Material nuevoMaterial = materialHandler.crearMaterial();
+                        Material nuevoMaterial = Inventario.crearMaterial();
 
                         // agregar material a la obra
-                        obra.agregarMaterial(nuevoMaterial);
+                        obra.getMateriales().agregarMaterial(nuevoMaterial);
 
                         // actualizar la lista de obras en la app
                         app.setObras(listaObras);
@@ -144,12 +146,11 @@ public class Main {
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
                     Obra o = listaObras.getFirst();
-                    MaterialHandler<Material> m = m.setListaMateriales(o.getMateriales());
-                    for (Material ma : m){
-                        System.out.println(ma.getNombre());
-                    }
-                    m.buscarMaterialPorNombre(scanner.nextLine().trim());
-
+                    o.getMateriales().mostrarMateriales();
+                    System.out.println("Ingrese el nombre del material a buscar");
+                    scanner.nextLine();
+                    Inventario.editarMaterial(o.getMateriales().buscarMaterialPorNombre(scanner.nextLine().trim()));
+                    o.getMateriales().mostrarMateriales();
                     break;
                 case 6:
                     // consultar certificados de avance

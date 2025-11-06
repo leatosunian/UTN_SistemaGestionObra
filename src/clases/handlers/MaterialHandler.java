@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// clase handler para materiales
 public class MaterialHandler<T extends Material> {
 
     // Agregar material
@@ -17,6 +18,7 @@ public class MaterialHandler<T extends Material> {
 
         System.out.println("\n===== CREAR NUEVO MATERIAL =====");
 
+        // scanear datos del material
         System.out.print("Nombre: ");
         String nombre = scanner.nextLine();
 
@@ -39,6 +41,7 @@ public class MaterialHandler<T extends Material> {
         double cantCons = scanner.nextDouble();
         scanner.nextLine(); // limpiar buffer
 
+        // seleccionar tipo de material
         System.out.println("\nSeleccione el tipo de material:");
         System.out.println("1. Fontanería");
         System.out.println("2. Estructural");
@@ -66,11 +69,13 @@ public class MaterialHandler<T extends Material> {
         }
 
         System.out.println("\nEl material " + nuevoMaterial.getNombre() + "fue creado correctamente.");
+        // retorno el nuevo material
         return nuevoMaterial;
     }
 
     // Mostrar un material
     public void mostrarMaterial(Material material) {
+        // print de cada campo del material recibido por parametro
         System.out.println("---------------------------");
         System.out.println("Nombre: " + material.getNombre());
         System.out.println("Unidad: " + material.getUnidadMedida());
@@ -85,10 +90,12 @@ public class MaterialHandler<T extends Material> {
 
     // Mostrar todos los materiales
     public void mostrarMateriales(ArrayList<Material> materiales) {
+        // si no hay materiales, mostrar mensaje
         if (materiales.isEmpty()) {
             System.out.println("No hay materiales registrados en la obra.\n");
             return;
         }
+        // print de cada material en la lista
         System.out.println("===== LISTA DE MATERIALES =====");
         for (Material material : materiales) {
             mostrarMaterial(material);
@@ -97,6 +104,7 @@ public class MaterialHandler<T extends Material> {
 
     // Buscar material por nombre
     public Material buscarMaterialPorNombre(String nombre, ArrayList<Material> materiales) {
+        // iteracion en la lista de materiales el material con el nombre recibido por parametro
         for (Material material : materiales) {
             if (material.getNombre().equalsIgnoreCase(nombre)) {
                 return material;
@@ -107,6 +115,7 @@ public class MaterialHandler<T extends Material> {
 
     // Eliminar material por nombre
     public ArrayList<Material> eliminarMaterialPorNombre(String nombre, ArrayList<Material> materiales) {
+        // buscar material por nombre
         Material encontrado = buscarMaterialPorNombre(nombre, materiales);
         if (encontrado != null) {
             materiales.remove(encontrado);

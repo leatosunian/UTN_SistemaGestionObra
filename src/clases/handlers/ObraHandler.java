@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import clases.Obra;
 
+// clase handler para obras
 public class ObraHandler {
 
     public Obra crearObra() {
@@ -24,7 +25,6 @@ public class ObraHandler {
 
         obra.setMateriales(new ArrayList<>());
         obra.setCertificados(new ArrayList<>());
-        obra.setProveedores(new ArrayList<>());
 
         return obra;
     }

@@ -1,13 +1,13 @@
 import clases.App;
+import clases.CertificadoAvance;
 import clases.Material;
 import clases.Obra;
 import clases.exceptions.obraException.ObraInexistenteException;
+import clases.handlers.CertificadoHandler;
 import clases.handlers.MaterialHandler;
-import clases.handlers.ObraHandler;
-import clases.handlersConsola.Inventario;
+import clases.handlers.ScannerHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +23,7 @@ public class Main {
 
         // inicializar el handler de materiales
         MaterialHandler<Material> materialHandler = new MaterialHandler<>();
-        ObraHandler obraHandler = new ObraHandler();
+        CertificadoHandler certificadoHandler  = new CertificadoHandler();
 
         Scanner scanner = new Scanner(System.in);
         int opcionPrincipal;
@@ -44,7 +44,7 @@ public class Main {
 
             switch (opcionPrincipal) {
                 case 1:
-                    menuAdministrador(scanner, materialHandler, obraHandler);
+                    menuAdministrador(scanner, materialHandler, app, certificadoHandler);
                     break;
                 case 2:
                     menuUsuarioObra(scanner);
@@ -64,7 +64,7 @@ public class Main {
     }
 
     // menu rol administrador
-    public static void menuAdministrador(Scanner scanner, MaterialHandler<Material> materialHandler, ObraHandler obraHandler) {
+    public static void menuAdministrador(Scanner scanner, MaterialHandler<Material> materialHandler, App app, CertificadoHandler certificadoHandler) {
         int opcion;
         do {
             System.out.println("===== MENÚ ADMINISTRADOR =====");
@@ -73,8 +73,8 @@ public class Main {
             System.out.println("3. Cargar material");
             System.out.println("4. Eliminar material");
             System.out.println("5. Editar material");
-            System.out.println("6. Consultar certificados de avance");
-            System.out.println("7. Crear certificado de avance");
+            System.out.println("6. Crear certificado de avance");
+            System.out.println("7. Consultar certificados de avance");
             System.out.println("8. Exportar certificado de avance en JSON");
             System.out.println("9. Exportar datos de obra en JSON");
             System.out.println("0. Volver al menú principal");
@@ -87,11 +87,11 @@ public class Main {
                     // creacion de obra
                     System.out.println("→ Crear nueva obra...\n");
 
-                    Obra nuevaObra = obraHandler.crearObra();
+                    Obra nuevaObra = ScannerHandler.crearObra();
 
                     if (nuevaObra != null) {
-                        listaObras.add(nuevaObra);
-                        app.setObras(listaObras);
+
+                        app.agregarObra(nuevaObra);
                         System.out.println("Obra '" + nuevaObra.getNombre() + "' creada correctamente.\n");
                     } else {
                         throw new ObraInexistenteException("Error al crear la obra.\n");
@@ -103,14 +103,7 @@ public class Main {
                     System.out.println("→ Eliminar obra...\n");
                     System.out.print("Ingrese el nombre de la obra a eliminar: ");
                     scanner.nextLine();
-                    String nombreObraEliminar = scanner.nextLine().trim();
-                    boolean eliminado = obraHandler.eliminarPorNombre(listaObras, nombreObraEliminar);
-                    if (eliminado) {
-                        app.setObras(listaObras);
-                        System.out.println("Obra '" + nombreObraEliminar + "' eliminada correctamente.\n");
-                    } else {
-                        System.out.println("No se encontró una obra con el nombre '" + nombreObraEliminar + "'.\n");
-                    }
+                    app.eliminarPorNombre(scanner.nextLine().trim());
 
                     break;
                 case 3:
@@ -119,23 +112,19 @@ public class Main {
                     // buscar obra para agregar material
                     System.out.print("Ingrese el nombre de la obra: ");
                     scanner.nextLine();
-                    String nombreObra = scanner.nextLine().trim();
-                    Obra obra = obraHandler.buscarPorNombre(listaObras, nombreObra);
+                    Obra obra = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
                     if (obra == null) {
-                        throw new ObraInexistenteException("La obra '" + nombreObra + "' no existe.\n");
+                        throw new ObraInexistenteException("La obra introducida no existe.\n");
                     } else {
                         // crear nuevo material
-                        Material nuevoMaterial = Inventario.crearMaterial();
+                        Material nuevoMaterial = ScannerHandler.crearMaterial();
 
                         // agregar material a la obra
                         obra.getMateriales().agregarMaterial(nuevoMaterial);
 
-                        // actualizar la lista de obras en la app
-                        app.setObras(listaObras);
-
-                        System.out.println("Material '" + nuevoMaterial.getNombre() + "' agregado a la obra '" + nombreObra + "'.\n");
+                        System.out.println("Material '" + nuevoMaterial.getNombre() + "' agregado a la obra '" + obra.getNombre() + "'.\n");
                     }
 
                     break;
@@ -146,22 +135,60 @@ public class Main {
                 case 5:
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
-                    Obra o = listaObras.getFirst();
-                    o.getMateriales().mostrarMateriales();
-                    System.out.println("Ingrese el nombre del material a buscar");
+                    System.out.print("Ingrese el nombre de la obra: ");
                     scanner.nextLine();
-                    Inventario.editarMaterial(o.getMateriales().buscarMaterialPorNombre(scanner.nextLine().trim()));
-                    o.getMateriales().mostrarMateriales();
-                    break;
+                    Obra o = app.buscarPorNombre(scanner.nextLine().trim());
+
+                    // si la obra no existe, mostrar mensaje de error
+                    if (o == null) {
+                        throw new ObraInexistenteException("La obra introducida no existe.\n");
+                    } else {
+                        System.out.println("Ingrese el nombre del material a buscar");
+                        scanner.nextLine();
+                        ScannerHandler.editarMaterial(o.getMateriales().buscarMaterialPorNombre(scanner.nextLine().trim()));
+                        o.getMateriales().mostrarMateriales();
+                        break;
+                    }
                 case 6:
-                    // consultar certificados de avance
-                    System.out.println("→ Consultar certificados de avance...\n");
-                    break;
-                case 7:
                     // crear certificado de avance
                     System.out.println("→ Crear certificado de avance...\n");
+                    // buscar obra existente
+                    System.out.print("Ingrese el nombre de la obra: ");
+                    scanner.nextLine();
+                    Obra obra1 = app.buscarPorNombre(scanner.nextLine().trim());
 
+                    // si la obra no existe, mostrar mensaje de error
+                    if (obra1 == null) {
+                        throw new ObraInexistenteException("La obra introducida no existe.\n");
+                    } else {
+                        // crear nuevo certificado de avance
+                        CertificadoAvance certif = ScannerHandler.crearCertificado();
+
+                        // agregar certificado a la obra
+                        obra1.getCertificados().agregarCertificado(certif);
+
+                        // actualizar la lista de obras en la app
+                        app.setObras(listaObras);
+
+                        System.out.println("Certificado agregado a la obra '" + obra1.getNombre() + "'.\n");
+                    }
                     break;
+
+                case 7:
+                    // consultar certificados de avance
+                System.out.println("→ Consultar certificados de avance...\n");
+                // buscar obra existente
+                System.out.print("Ingrese el nombre de la obra: ");
+                scanner.nextLine();
+                Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
+
+                // si la obra no existe, mostrar mensaje de error
+                if (obra2 == null) {
+                    throw new ObraInexistenteException("La obra introducida no existe.\n");
+                } else {
+                    obra2.getCertificados().mostrarCertificados();
+                }
+                break;
                 case 8:
                     // exportar certificado de avance en JSON
                     System.out.println("→ Exportar certificado de avance en JSON...\n");

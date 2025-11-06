@@ -1,15 +1,18 @@
-package clases.handlersConsola;
+package clases.handlers;
 
+import clases.CertificadoAvance;
 import clases.Material;
+import clases.Obra;
 import clases.tiposMaterial.MaterialElectrico;
 import clases.tiposMaterial.MaterialEstructural;
 import clases.tiposMaterial.MaterialFontaneria;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public class Inventario{
+public class ScannerHandler {
 
     // Editar material por menú de opciones
     public static void editarMaterial(Material material) {
@@ -72,6 +75,7 @@ public class Inventario{
             } while (opcion != 0);
 
             System.out.println("Cambios guardados correctamente.\n");
+            scanner.close();
         }
     }
 
@@ -129,7 +133,59 @@ public class Inventario{
         }
 
         System.out.println("\nEl material " + nuevoMaterial.getNombre() + "fue creado correctamente.");
+        scanner.close();
         return nuevoMaterial;
+    }
+
+
+    // Agregar certificado
+    public static CertificadoAvance crearCertificado(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\n===== CREAR NUEVO CERTIFICADO =====");
+
+        System.out.println("Fecha (dd/mm/yyyy): ");
+        String input = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fecha = LocalDate.parse(input, formatter);
+
+        System.out.println("Porcentaje de avance: ");
+        double porcentajeAvance  = scanner.nextDouble();
+
+        System.out.println("Monto Certificado: ");
+        double montoCertificado = scanner.nextDouble();
+
+        System.out.println("Descripcion Trabajo: ");
+        scanner.nextLine();
+        String descripcionTrabajo = scanner.nextLine();
+
+        CertificadoAvance certificado = new CertificadoAvance();
+        certificado.setFecha(fecha);
+        certificado.setPorcentajeAvance(porcentajeAvance);
+        certificado.setMontoCertificado(montoCertificado);
+        certificado.setDescripcionTrabajo(descripcionTrabajo);
+
+        return certificado;
+    }
+
+    public static Obra crearObra() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nombre: ");
+        String nombre = sc.nextLine().trim();
+        System.out.print("Descripcion: ");
+        String descripcion = sc.nextLine().trim();
+        System.out.print("Ubicacion: ");
+        String ubicacion = sc.nextLine().trim();
+
+        Obra obra = new Obra();
+        obra.setNombre(nombre);
+        obra.setDescripcion(descripcion);
+        obra.setUbicacion(ubicacion);
+
+        obra.setMateriales(new MaterialHandler<>());
+        obra.setCertificados(new CertificadoHandler());
+
+        return obra;
     }
 
 }

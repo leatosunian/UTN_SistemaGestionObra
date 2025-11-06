@@ -6,15 +6,18 @@ import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class CertificadoHandler {
     private List<CertificadoAvance> certificados;
 
+    // Constructor
     public CertificadoHandler() {
         this.certificados = new ArrayList<>();
     }
 
+    // Getters y Setters
     public List<CertificadoAvance> getCertificados() {
         return certificados;
     }
@@ -23,31 +26,31 @@ public class CertificadoHandler {
         this.certificados = certificados;
     }
 
-    // Agregar certificado
-    public CertificadoAvance crearCertificado(){
-        Scanner scanner = new Scanner(System.in);
+    // Agregar un certificado.
+    public void agregarCertificado (CertificadoAvance certificado){
+        this.certificados.add(certificado);
+    }
 
-        System.out.println("\n===== CREAR NUEVO CERTIFICADO =====");
+    // Mostrar un certificado.
+    public void mostrarCertificado (CertificadoAvance certificado){
+        System.out.println("---------------------------");
+        System.out.println("Fecha: " + certificado.getFecha());
+        System.out.println("Porcentaje de avance: " + certificado.getPorcentajeAvance() + "%");
+        System.out.println("Monto certificado: $" + certificado.getMontoCertificado());
+        System.out.println("Descripcion de trabajo: " + certificado.getDescripcionTrabajo());
+        System.out.println("---------------------------\n");
+    }
 
-        System.out.println("Fecha: ");
-        LocalDate fecha = LocalDate.parse(scanner.nextLine());
-
-        System.out.println("Porcentaje de avance: ");
-        double porcentajeAvance  = scanner.nextDouble();
-
-        System.out.println("Monto Certificado: ");
-        double montoCertificado = scanner.nextDouble();
-
-        System.out.println("Descripcion Trabajo: ");
-        String descripcionTrabajo = scanner.nextLine();
-
-        CertificadoAvance certificado = new CertificadoAvance();
-        certificado.setFecha(fecha);
-        certificado.setPorcentajeAvance(porcentajeAvance);
-        certificado.setMontoCertificado(montoCertificado);
-        certificado.setDescripcionTrabajo(descripcionTrabajo);
-
-        return certificado;
+    // Mostrar TODOS los certificados de la obra.
+    public void mostrarCertificados(){
+        if (certificados.isEmpty()){
+            System.out.println("No hay certificados registrados en esta obra. \n");
+            return;
+        }
+        System.out.println("===== LISTA DE MATERIALES =====");
+        for (CertificadoAvance c: certificados) {
+            mostrarCertificado(c);
+        }
     }
 
 

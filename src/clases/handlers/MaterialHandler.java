@@ -1,6 +1,7 @@
 package clases.handlers;
 
 import clases.Material;
+import clases.Obra;
 
 
 import java.util.ArrayList;
@@ -65,17 +66,19 @@ private List<T> listaMateriales;
 
     // Eliminar material por nombre
     public void eliminarPorNombre(String nombre) {
-        ListIterator<T> listIterator = listaMateriales.listIterator();
-        boolean existe = false;
-        while (listIterator.hasNext() && !existe) {
-            T material = listIterator.next();
-            if (material.getNombre().equals(nombre)) {
-                listIterator.remove();
-                existe = true;
+        ListIterator<T> iterator = listaMateriales.listIterator();
+        boolean found = false;
+        while (iterator.hasNext()){
+            if (iterator.next().getNombre().equalsIgnoreCase(nombre)){
+                found=true;
+                iterator.remove();
             }
         }
-        if (!existe) {
-            System.out.println("No existe el material con el nombre: " + nombre);
+        if (found){
+            System.out.println("Se encontro y elimino el material:" + nombre);
+        }
+        else {
+            System.out.println("No se encontro o no se pudo eliminar el material:" + nombre);
         }
     }
 

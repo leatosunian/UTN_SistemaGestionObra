@@ -70,6 +70,8 @@ public class CertificadoAvance { // documento de avance de obra
         this.descripcionTrabajo = descripcionTrabajo;
     }
 
+
+
     @Override
     public String toString() {
         return "Certificado { id=" + id +

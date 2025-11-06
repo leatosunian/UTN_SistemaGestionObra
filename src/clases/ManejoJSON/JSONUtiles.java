@@ -9,9 +9,9 @@ import org.json.JSONArray;
 import org.json.JSONTokener;
 
 public class JSONUtiles {
-    public static void grabar(JSONArray array) {
+    public static void grabar(JSONArray array, String nombre) {
         try {
-            FileWriter file = new FileWriter("");
+            FileWriter file = new FileWriter(nombre);
             file.write(array.toString());
             file.flush();
             file.close();

@@ -1,5 +1,6 @@
 package clases;
 
+import clases.handlers.CertificadoHandler;
 import clases.handlers.MaterialHandler;
 
 import java.util.ArrayList;
@@ -10,14 +11,13 @@ public class Obra {
     private String descripcion;
     private String ubicacion;
     private MaterialHandler<Material> materiales;
-
-    private List<CertificadoAvance> certificados;
+    private CertificadoHandler certificados;
 
     // constructor
     public Obra() {
         this.materiales = new MaterialHandler<>();
 
-        this.certificados = new ArrayList<>();
+        this.certificados = new CertificadoHandler();
     }
 
     // getters y setters
@@ -31,8 +31,11 @@ public class Obra {
         this.materiales = materiales;
     }
 
-    public List<CertificadoAvance> getCertificados() {
+    public CertificadoHandler getCertificados() {
         return certificados;
+    }
+    public void setCertificados(CertificadoHandler certificados) {
+        this.certificados = certificados;
     }
 
     public String getNombre() {
@@ -59,9 +62,7 @@ public class Obra {
         this.ubicacion = ubicacion;
     }
 
-    public void setCertificados(List<CertificadoAvance> certificados) {
-        this.certificados = certificados;
-    }
+
 
 
 

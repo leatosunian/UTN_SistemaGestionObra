@@ -28,6 +28,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int opcionPrincipal;
 
+        // menu principal
         System.out.println("\n===== SISTEMA DE GESTIÓN DE OBRA ===== \n");
 
         do {
@@ -62,7 +63,7 @@ public class Main {
         scanner.close();
     }
 
-    // ================= MENÚ ADMINISTRADOR =================
+    // menu rol administrador
     public static void menuAdministrador(Scanner scanner, MaterialHandler<Material> materialHandler, ObraHandler obraHandler) {
         int opcion;
         do {
@@ -179,7 +180,7 @@ public class Main {
         } while (opcion != 0);
     }
 
-    // ================= MENÚ USUARIO DE OBRA =================
+    // menu rol usuario de obra
     public static void menuUsuarioObra(Scanner scanner) {
         int opcion;
         do {
@@ -224,12 +225,14 @@ public class Main {
         } while (opcion != 0);
     }
 
-    // ================= MENÚ INVERSOR =================
+    // menu rol inversor
     public static void menuInversor(Scanner scanner) {
         int opcion;
         do {
             System.out.println("===== MENÚ INVERSOR =====");
             System.out.println("1. Consultar certificados de avance");
+            System.out.println("2. Exportar certificado de avance en JSON");
+            System.out.println("3. Exportar datos de obra en JSON");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -238,6 +241,15 @@ public class Main {
             switch (opcion) {
                 case 1:
                     System.out.println("→ Consultar certificados de avance...");
+                    // buscar obra por nombre y listar sus certificados de avance
+                    break;
+                case 2:
+                    // exportar certificado de avance en JSON
+                    System.out.println("→ Exportar certificado de avance en JSON...\n");
+                    break;
+                case 3:
+                    // exportar datos de obra en JSON
+                    System.out.println("→ Exportar datos de obra en JSON...\n");
                     break;
                 case 0:
                     System.out.println("Volviendo al menú principal...\n");

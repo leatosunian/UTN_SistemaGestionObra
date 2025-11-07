@@ -19,6 +19,9 @@ public class MaterialAcabado extends Material {
                 cantidadEstimadaTotal, cantidadAcopiadaObra, cantidadEnProveedor, cantidadConsumida);
         this.tipoMaterial = tipoMaterial;
     }
+    public MaterialAcabado() {
+
+    }
 
     public String getTipoMaterial() {
         return tipoMaterial;

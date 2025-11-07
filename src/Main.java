@@ -1,5 +1,6 @@
 import clases.App;
 import clases.CertificadoAvance;
+import clases.ManejoJSON.manejoJSON;
 import clases.Material;
 import clases.Obra;
 import clases.exceptions.obraException.ObraInexistenteException;
@@ -195,6 +196,7 @@ public class Main {
                     break;
                 case 9:
                     // exportar datos de obra en JSON
+                            manejoJSON.guardarObras(app.getObras());
                     System.out.println("→ Exportar datos de obra en JSON...\n");
                     break;
                 case 0:

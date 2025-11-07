@@ -19,7 +19,9 @@ public class MaterialFontaneria extends Material {
                 cantidadEstimadaTotal, cantidadAcopiadaObra, cantidadEnProveedor, cantidadConsumida);
         this.tipoMaterial = tipoMaterial;
     }
+    public MaterialFontaneria() {
 
+    }
     public String getTipoMaterial() {
         return tipoMaterial;
     }

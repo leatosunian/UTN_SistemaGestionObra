@@ -2,6 +2,8 @@ package clases;
 
 import clases.handlers.CertificadoHandler;
 import clases.handlers.MaterialHandler;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,9 +64,9 @@ public class Obra {
         this.ubicacion = ubicacion;
     }
 
+    }
 
 
 
 
 
-}

@@ -19,7 +19,9 @@ public class MaterialEstructural extends Material {
                 cantidadEstimadaTotal, cantidadAcopiadaObra, cantidadEnProveedor, cantidadConsumida);
         this.tipoMaterial = tipoMaterial;
     }
+    public MaterialEstructural() {
 
+    }
     public String getTipoMaterial() {
         return tipoMaterial;
     }

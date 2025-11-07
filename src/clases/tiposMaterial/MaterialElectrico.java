@@ -19,7 +19,9 @@ public class MaterialElectrico extends Material {
                 cantidadEstimadaTotal, cantidadAcopiadaObra, cantidadEnProveedor, cantidadConsumida);
         this.tipoMaterial = tipoMaterial;
     }
+    public MaterialElectrico() {
 
+    }
     public String getTipoMaterial() {
         return tipoMaterial;
     }

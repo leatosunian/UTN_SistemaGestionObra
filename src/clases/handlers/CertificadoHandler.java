@@ -1,9 +1,13 @@
 package clases.handlers;
 
 import clases.CertificadoAvance;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.time.format.DateTimeFormatter;
 import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -52,6 +56,9 @@ public class CertificadoHandler {
             mostrarCertificado(c);
         }
     }
+
+
+
 
 
 }

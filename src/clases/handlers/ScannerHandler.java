@@ -3,6 +3,7 @@ package clases.handlers;
 import clases.CertificadoAvance;
 import clases.Material;
 import clases.Obra;
+import clases.exceptions.materialExceptions.MaterialInexistenteException;
 import clases.tiposMaterial.MaterialElectrico;
 import clases.tiposMaterial.MaterialEstructural;
 import clases.tiposMaterial.MaterialFontaneria;
@@ -10,6 +11,7 @@ import clases.tiposMaterial.MaterialFontaneria;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ScannerHandler {
@@ -49,22 +51,27 @@ public class ScannerHandler {
                     case 3:
                         System.out.print("Nuevo precio unitario: ");
                         material.setPrecioUnitario(scanner.nextDouble());
+                        scanner.nextLine();
                         break;
                     case 4:
                         System.out.print("Nueva cantidad estimada total: ");
                         material.setCantidadEstimadaTotal(scanner.nextDouble());
+                        scanner.nextLine();
                         break;
                     case 5:
                         System.out.print("Nueva cantidad acopiada en obra: ");
                         material.setCantidadAcopiadaObra(scanner.nextDouble());
+                        scanner.nextLine();
                         break;
                     case 6:
                         System.out.print("Nueva cantidad en proveedor: ");
                         material.setCantidadEnProveedor(scanner.nextDouble());
+                        scanner.nextLine();
                         break;
                     case 7:
                         System.out.print("Nueva cantidad consumida: ");
                         material.setCantidadConsumida(scanner.nextDouble());
+                        scanner.nextLine();
                         break;
                     case 0:
                         System.out.println("Volviendo al menú anterior...");
@@ -75,7 +82,7 @@ public class ScannerHandler {
             } while (opcion != 0);
 
             System.out.println("Cambios guardados correctamente.\n");
-            scanner.close();
+
         }
     }
 
@@ -92,15 +99,19 @@ public class ScannerHandler {
 
         System.out.print("Precio unitario: ");
         double precioUnitario = scanner.nextDouble();
+        scanner.nextLine();
 
         System.out.print("Cantidad estimada total: ");
         double cantTotal = scanner.nextDouble();
+        scanner.nextLine();
 
         System.out.print("Cantidad acopiada en obra: ");
         double cantObra = scanner.nextDouble();
+        scanner.nextLine();
 
         System.out.print("Cantidad en proveedor: ");
         double cantProv = scanner.nextDouble();
+        scanner.nextLine();
 
         System.out.print("Cantidad consumida: ");
         double cantCons = scanner.nextDouble();
@@ -112,7 +123,8 @@ public class ScannerHandler {
         System.out.println("3. Eléctrico");
         System.out.print("Opción: ");
         int opcion = scanner.nextInt();
-        scanner.nextLine(); // limpiar buffer
+        scanner.nextLine();
+
 
 
         Material nuevoMaterial = null;
@@ -133,14 +145,15 @@ public class ScannerHandler {
         }
 
         System.out.println("\nEl material " + nuevoMaterial.getNombre() + "fue creado correctamente.");
-        scanner.close();
+
         return nuevoMaterial;
     }
 
 
     // Agregar certificado
-    public static CertificadoAvance crearCertificado(){
+    public static CertificadoAvance crearCertificado(Obra o){
         Scanner scanner = new Scanner(System.in);
+        char opcion='n';
 
         System.out.println("\n===== CREAR NUEVO CERTIFICADO =====");
 
@@ -151,19 +164,50 @@ public class ScannerHandler {
 
         System.out.println("Porcentaje de avance: ");
         double porcentajeAvance  = scanner.nextDouble();
+        scanner.nextLine();
 
         System.out.println("Monto Certificado: ");
         double montoCertificado = scanner.nextDouble();
+        scanner.nextLine();
+
+        List<Material> materialesUtilizados = new ArrayList<>();
+        do {
+            System.out.println("Ingrese el nombre del material utilizado: ");
+            for (Material m : o.getMateriales().getListaMateriales()){
+                System.out.println("- " + m.getNombre()+ "\n");
+            }
+            String nombreMaterial = scanner.nextLine();
+            Material m = o.getMateriales().buscarMaterialPorNombre(nombreMaterial);
+
+            if(m != null){
+                materialesUtilizados.add(m);
+
+                System.out.println("Ingrese la cantidad de material consumida: ");
+                double cantidadConsumidaMaterial = scanner.nextDouble();
+                scanner.nextLine();
+                if (m.getCantidadAcopiadaObra()>=cantidadConsumidaMaterial) {
+                    m.consumirMaterial(cantidadConsumidaMaterial);
+                }
+                else {
+                    System.out.println("Error, La cantidad que se consumio es mayor a la acopiada");
+                }
+            }
+            else {
+                throw new MaterialInexistenteException("Material"+ nombreMaterial + "no encontrado en la obra");
+            }
+
+            do {
+                System.out.println("Desear cargar otro material? (s/n)");
+                opcion = scanner.nextLine().charAt(0);
+            } while (opcion != 'n' && opcion != 's');
+
+        }while (opcion != 'n');
 
         System.out.println("Descripcion Trabajo: ");
-        scanner.nextLine();
         String descripcionTrabajo = scanner.nextLine();
 
-        CertificadoAvance certificado = new CertificadoAvance();
-        certificado.setFecha(fecha);
-        certificado.setPorcentajeAvance(porcentajeAvance);
-        certificado.setMontoCertificado(montoCertificado);
-        certificado.setDescripcionTrabajo(descripcionTrabajo);
+        CertificadoAvance certificado = new CertificadoAvance(fecha, porcentajeAvance, montoCertificado,descripcionTrabajo);
+        certificado.setMateriales(materialesUtilizados);
 
         return certificado;
     }

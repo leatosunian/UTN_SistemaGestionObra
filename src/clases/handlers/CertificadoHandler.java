@@ -1,6 +1,7 @@
 package clases.handlers;
 
 import clases.CertificadoAvance;
+import clases.Material;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +42,10 @@ public class CertificadoHandler {
         System.out.println("Fecha: " + certificado.getFecha());
         System.out.println("Porcentaje de avance: " + certificado.getPorcentajeAvance() + "%");
         System.out.println("Monto certificado: $" + certificado.getMontoCertificado());
+        System.out.println("Materiales utilizados: ");
+        for (Material m : certificado.getMateriales()) {
+            System.out.println("- " + m.getNombre());
+        }
         System.out.println("Descripcion de trabajo: " + certificado.getDescripcionTrabajo());
         System.out.println("---------------------------\n");
     }

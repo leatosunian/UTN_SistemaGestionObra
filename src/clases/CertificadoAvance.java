@@ -1,6 +1,10 @@
 package clases;
 
+import clases.handlers.MaterialHandler;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CertificadoAvance { // documento de avance de obra
     private static int cantCertificados = 1;
@@ -9,7 +13,9 @@ public class CertificadoAvance { // documento de avance de obra
     private LocalDate fecha;
     private double porcentajeAvance;
     private double montoCertificado;
+    private List<Material> materiales;
     private String descripcionTrabajo;
+
 
     public CertificadoAvance() {
     }
@@ -19,6 +25,7 @@ public class CertificadoAvance { // documento de avance de obra
         this.fecha = fecha;
         this.porcentajeAvance = porcentajeAvance;
         this.montoCertificado = montoCertificado;
+        this.materiales = new ArrayList<>();
         this.descripcionTrabajo = descripcionTrabajo;
     }
 
@@ -70,7 +77,13 @@ public class CertificadoAvance { // documento de avance de obra
         this.descripcionTrabajo = descripcionTrabajo;
     }
 
+    public  List<Material> getMateriales() {
+        return materiales;
+    }
 
+    public void setMateriales(List<Material> materiales) {
+        this.materiales = materiales;
+    }
 
     @Override
     public String toString() {

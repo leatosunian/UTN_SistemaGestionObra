@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 public class App {
     // lista de todas las obras
-    private ArrayList<Obra> obras;
+    private List<Obra> obras;
 
     // constructor para iniciarlizar la aplicacion y la lista de obras
     public App() {
@@ -14,11 +14,11 @@ public class App {
     }
 
     // getters y setters
-    public ArrayList<Obra> getObras() {
+    public List<Obra> getObras() {
         return obras;
     }
 
-    public void setObras(ArrayList<Obra> obras) {
+    public void setObras(List<Obra> obras) {
         this.obras = obras;
     }
 

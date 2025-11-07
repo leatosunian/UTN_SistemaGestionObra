@@ -1,3 +1,22 @@
-[
-
-]
+[{
+    "descripcion": "Nueva",
+    "ubicacion": "MDP",
+    "certificados": {"certificados": [{
+        "fecha": "2025-10-15",
+        "montoCertificado": 10000,
+        "porcentajeAvance": 70,
+        "descripcionTrabajo": "Colocacion de ladrillos",
+        "id": 1
+    }]},
+    "materiales": {"materiales": [{
+        "precioUnitario": 1000,
+        "unidadMedida": "unidades",
+        "cantidadEnProveedor": 0,
+        "cantidadAcopiadaObra": 500,
+        "cantidadConsumida": 500,
+        "nombre": "Ladrillo",
+        "cantidadEstimadaTotal": 1000,
+        "cantidadFaltanteComprar": 0
+    }]},
+    "nombre": "Casa"
+}]

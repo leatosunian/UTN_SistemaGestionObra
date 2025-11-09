@@ -1,4 +1,5 @@
 package clases.ManejoJSON;
+import clases.App;
 import clases.CertificadoAvance;
 import clases.Obra;
 import clases.handlers.CertificadoHandler;
@@ -24,30 +25,46 @@ import java.util.List;
 public class manejoJSON {
     private static final String ARCHIVO_OBRAS = "obras.json";
 
-    // 🔹 Guardar todas las obras en el archivo JSON
-    public static void guardarObras(List<Obra> obras) {
+    public static void guardarApp(App app){
+        try {
+            JSONArray jObras = obrasToJson(app.getObras());
+            JSONObject jApp = new JSONObject();
+            JSONObject jRaiz = new JSONObject();
+            jApp.put("obras", jObras);
+            jRaiz.put("app", jApp);
+
+
+
+            try (FileWriter file = new FileWriter(ARCHIVO_OBRAS)) {
+                file.write(jRaiz.toString(4)); // con indentación
+                System.out.println("App guardada correctamente en " + ARCHIVO_OBRAS);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // 🔹 Devuelve todas las obras en formato JSON
+    public static JSONArray obrasToJson(List<Obra> obras) {
         JSONArray arrayObras = new JSONArray();
 
         for (Obra obra : obras) {
             arrayObras.put(obraToJSON(obra));
         }
 
-        try (FileWriter file = new FileWriter(ARCHIVO_OBRAS)) {
-            file.write(arrayObras.toString(4)); // con indentación
-            System.out.println("Obras guardadas correctamente en " + ARCHIVO_OBRAS);
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+      return arrayObras;
     }
     public static JSONObject obraToJSON(Obra obra) {
         try {
             JSONObject jObra = new JSONObject();
+            jObra.put("certificados", CertificadosToJSON(obra.getCertificados()));
             jObra.put("nombre", obra.getNombre());
             jObra.put("descripcion", obra.getDescripcion());
             jObra.put("ubicacion", obra.getUbicacion());
 
             jObra.put("materiales", MaterialesToJSON(obra.getMateriales()));
-            jObra.put("certificados", CertificadosToJSON(obra.getCertificados()));
+
 
             return jObra;
         } catch (JSONException e) {
@@ -103,15 +120,27 @@ public class manejoJSON {
             throw new RuntimeException(e);
         }
     }
-
+public static App mapeoApp(){
+        App app = new App();
+    List<Obra> obras = new ArrayList<>();
+    try {
+        JSONObject json = new JSONObject(JSONUtiles.leer(ARCHIVO_OBRAS));
+        JSONObject jApp = json.getJSONObject("app");
+          jsonToObras(jApp);
+app.setObras(obras);
+            System.out.println("Obras cargadas correctamente desde " + ARCHIVO_OBRAS);
+    } catch (JSONException e) {
+        throw new RuntimeException(e);
+    }
+return app;
+}
   // Mapeo del Json
-    public static List<Obra> cargarObras() {
+    public static List<Obra> jsonToObras(JSONObject jApp) {
         List<Obra> obras = new ArrayList<>();
 
-
         try {
-            JSONObject json = new JSONObject(JSONUtiles.leer(ARCHIVO_OBRAS));
-            JSONArray arrayObras = json.getJSONArray("obras");
+
+            JSONArray arrayObras = jApp.getJSONArray("obras");
 
             // Iterar el array JSON y reconstruir cada Obra
             for (int i = 0; i < arrayObras.length(); i++) {

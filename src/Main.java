@@ -52,6 +52,7 @@ public class Main {
             switch (opcionPrincipal) {
                 case 1:
                     menuAdministrador(scanner, materialHandler, app, certificadoHandler);
+
                     break;
                 case 2:
                     menuUsuarioObra(scanner);
@@ -86,6 +87,7 @@ public class Main {
             System.out.println("9. Exportar datos de obra en JSON");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
+            scanner.nextLine();
             opcion = scanner.nextInt();
             scanner.nextLine();
             System.out.println();
@@ -97,7 +99,7 @@ public class Main {
 
                     Obra nuevaObra = ScannerHandler.crearObra();
 
-                    if (nuevaObra != null) {
+                    if (nuevaObra !=  null) {
 
                         app.agregarObra(nuevaObra);
                         System.out.println("Obra '" + nuevaObra.getNombre() + "' creada correctamente.\n");
@@ -201,7 +203,7 @@ public class Main {
                     break;
                 case 9:
                     // exportar datos de obra en JSON
-                            manejoJSON.guardarObras(app.getObras());
+                            manejoJSON.guardarApp(app);
                     System.out.println("→ Exportar datos de obra en JSON...\n");
                     break;
                 case 0:

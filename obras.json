@@ -20,6 +20,17 @@
             "porcentajeAvance": 10,
             "descripcionTrabajo": "Se levanto una pared",
             "id": 1
+        },
+        {
+            "fecha": "2025-11-12",
+            "montoCertificado": 25000,
+            "materialesUsados": [{
+                "cantidadUsada": 250,
+                "nombre": "Arena"
+            }],
+            "porcentajeAvance": 25,
+            "descripcionTrabajo": "Utilizacion de arena",
+            "id": 1
         }
     ]},
     "materiales": {"materiales": [
@@ -43,6 +54,17 @@
             "cantidadConsumida": 500,
             "nombre": "Cemento",
             "cantidadEstimadaTotal": 3000,
+            "cantidadFaltanteComprar": 0
+        },
+        {
+            "tipo": "MaterialEstructural",
+            "precioUnitario": 150,
+            "unidadMedida": "kg",
+            "cantidadEnProveedor": 0,
+            "cantidadAcopiadaObra": 750,
+            "cantidadConsumida": 250,
+            "nombre": "Arena",
+            "cantidadEstimadaTotal": 1000,
             "cantidadFaltanteComprar": 0
         }
     ]},

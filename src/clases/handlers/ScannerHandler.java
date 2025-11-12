@@ -10,7 +10,9 @@ import clases.tiposMaterial.MaterialFontaneria;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,6 +40,7 @@ public class ScannerHandler {
                 System.out.print("Seleccione una opción: ");
                 opcion = scanner.nextInt();
                 scanner.nextLine(); // limpiar buffer
+                boolean correcto = false;
 
                 switch (opcion) {
                     case 1:
@@ -49,29 +52,69 @@ public class ScannerHandler {
                         material.setUnidadMedida(scanner.nextLine());
                         break;
                     case 3:
-                        System.out.print("Nuevo precio unitario: ");
-                        material.setPrecioUnitario(scanner.nextDouble());
-                        scanner.nextLine();
+                        while (!correcto){
+                            try{
+                                System.out.print("Nuevo precio unitario: ");
+                                material.setPrecioUnitario(scanner.nextDouble());
+                                scanner.nextLine();
+                                correcto = true;
+                            }catch (InputMismatchException e){
+                                System.out.println("Precio invalido. Intente nuevamente.");
+                                scanner.nextLine();
+                            }
+                        }
                         break;
                     case 4:
-                        System.out.print("Nueva cantidad estimada total: ");
-                        material.setCantidadEstimadaTotal(scanner.nextDouble());
-                        scanner.nextLine();
+                        while (!correcto){
+                            try{
+                                System.out.print("Nueva cantidad estimada total: ");
+                                material.setCantidadEstimadaTotal(scanner.nextDouble());
+                                scanner.nextLine();
+                                correcto = true;
+                            }catch (InputMismatchException e){
+                                System.out.println("Cantidad invalida. Intente nuevamente.");
+                                scanner.nextLine();
+                            }
+                        }
                         break;
                     case 5:
-                        System.out.print("Nueva cantidad acopiada en obra: ");
-                        material.setCantidadAcopiadaObra(scanner.nextDouble());
-                        scanner.nextLine();
+                        while (!correcto){
+                            try{
+                                System.out.print("Nueva cantidad acopiada en obra: ");
+                                material.setCantidadAcopiadaObra(scanner.nextDouble());
+                                scanner.nextLine();
+                                correcto = true;
+                            }catch (InputMismatchException e){
+                                System.out.println("Cantidad invalida. Intente nuevamente.");
+                                scanner.nextLine();
+                            }
+                        }
                         break;
                     case 6:
-                        System.out.print("Nueva cantidad en proveedor: ");
-                        material.setCantidadEnProveedor(scanner.nextDouble());
-                        scanner.nextLine();
+                        while (!correcto){
+                            try{
+                                System.out.print("Nueva cantidad en proveedor: ");
+                                material.setCantidadEnProveedor(scanner.nextDouble());
+                                scanner.nextLine();
+                                correcto = true;
+                            }catch (InputMismatchException e){
+                                System.out.println("Cantidad invalida. Intente nuevamente.");
+                                scanner.nextLine();
+                            }
+                        }
                         break;
                     case 7:
-                        System.out.print("Nueva cantidad consumida: ");
-                        material.setCantidadConsumida(scanner.nextDouble());
-                        scanner.nextLine();
+                        while (!correcto){
+                            try{
+                                System.out.print("Nueva cantidad consumida: ");
+                                material.setCantidadConsumida(scanner.nextDouble());
+                                scanner.nextLine();
+                                correcto = true;
+                            }catch (InputMismatchException e){
+                                System.out.println("Cantidad invalida. Intente nuevamente.");
+                                scanner.nextLine();
+                            }
+                        }
                         break;
                     case 0:
                         System.out.println("Volviendo al menú anterior...");
@@ -88,6 +131,12 @@ public class ScannerHandler {
 
     public static Material crearMaterial() {
         Scanner scanner = new Scanner(System.in);
+        boolean correcto = false;
+        double precioUnitario = 0;
+        double cantTotal = 0;
+        double cantObra = 0;
+        double cantProv = 0;
+        double cantCons = 0;
 
         System.out.println("\n===== CREAR NUEVO MATERIAL =====");
 
@@ -97,25 +146,69 @@ public class ScannerHandler {
         System.out.print("Unidad de medida (kg, m3, unidades, etc.): ");
         String unidadMedida = scanner.nextLine();
 
-        System.out.print("Precio unitario: ");
-        double precioUnitario = scanner.nextDouble();
-        scanner.nextLine();
+        while (!correcto){
+            try{
+                System.out.print("Precio unitario: ");
+                precioUnitario = scanner.nextDouble();
+                scanner.nextLine();
+                correcto = true;
+            }catch (InputMismatchException e){
+                System.out.println("Precio invalido. Intente nuevamente");
+                scanner.nextLine();
+            }
+        }
 
-        System.out.print("Cantidad estimada total: ");
-        double cantTotal = scanner.nextDouble();
-        scanner.nextLine();
+        correcto = false;
+        while (!correcto){
+            try{
+                System.out.print("Cantidad estimada total: ");
+                cantTotal = scanner.nextDouble();
+                scanner.nextLine();
+                correcto = true;
+            }catch (InputMismatchException e){
+                System.out.println("Cantidad invalida. Intente nuevamente");
+                scanner.nextLine();
+            }
+        }
 
-        System.out.print("Cantidad acopiada en obra: ");
-        double cantObra = scanner.nextDouble();
-        scanner.nextLine();
+        correcto = false;
+        while (!correcto){
+            try{
+                System.out.print("Cantidad acopiada en obra: ");
+                cantObra = scanner.nextDouble();
+                scanner.nextLine();
+                correcto = true;
+            }catch (InputMismatchException e){
+                System.out.println("Cantidad invalida. Intente nuevamente");
+                scanner.nextLine();
+            }
+        }
 
-        System.out.print("Cantidad en proveedor: ");
-        double cantProv = scanner.nextDouble();
-        scanner.nextLine();
+        correcto = false;
+        while (!correcto){
+            try{
+                System.out.print("Cantidad en proveedor: ");
+                cantProv = scanner.nextDouble();
+                scanner.nextLine();
+                correcto = true;
+            }catch (InputMismatchException e){
+                System.out.println("Cantidad invalida. Intente nuevamente");
+                scanner.nextLine();
+            }
+        }
 
-        System.out.print("Cantidad consumida: ");
-        double cantCons = scanner.nextDouble();
-        scanner.nextLine(); // limpiar buffer
+        correcto = false;
+        while (!correcto){
+            try{
+                System.out.print("Cantidad consumida: ");
+                cantCons = scanner.nextDouble();
+                scanner.nextLine(); // limpiar buffer
+                correcto = true;
+            }catch (InputMismatchException e){
+                System.out.println("Cantidad invalida. Intente nuevamente");
+                scanner.nextLine();
+            }
+        }
 
         System.out.println("\nSeleccione el tipo de material:");
         System.out.println("1. Fontanería");
@@ -124,8 +217,6 @@ public class ScannerHandler {
         System.out.print("Opción: ");
         int opcion = scanner.nextInt();
         scanner.nextLine();
-
-
 
         Material nuevoMaterial = null;
 
@@ -144,37 +235,65 @@ public class ScannerHandler {
                 return null;
         }
 
-        System.out.println("\nEl material " + nuevoMaterial.getNombre() + "fue creado correctamente.");
+        System.out.println("\nEl material " + nuevoMaterial.getNombre() + " fue creado correctamente.");
 
         return nuevoMaterial;
     }
-
 
     // Agregar certificado
     public static CertificadoAvance crearCertificado(Obra o){
         Scanner scanner = new Scanner(System.in);
         char opcion='n';
+        boolean correcto = false;
+        LocalDate fecha = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        double porcentajeAvance = 0;
+        double montoCertificado = 0;
+        double cantidadConsumidaMaterial = 0;
 
         System.out.println("\n===== CREAR NUEVO CERTIFICADO =====");
 
-        System.out.println("Fecha (dd/mm/yyyy): ");
-        String input = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fecha = LocalDate.parse(input, formatter);
+        while(fecha == null){
+            try{
+                System.out.println("Fecha (dd/mm/yyyy): ");
+                String input = scanner.nextLine();
+                fecha = LocalDate.parse(input, formatter);
+            }catch(DateTimeParseException e){
+                System.out.println("Fecha invalida, por favor intente nuevamente.");
+            }
+        }
 
-        System.out.println("Porcentaje de avance: ");
-        double porcentajeAvance  = scanner.nextDouble();
-        scanner.nextLine();
+        while (!correcto){
+            try{
+                System.out.println("Porcentaje de avance: ");
+                porcentajeAvance  = scanner.nextDouble();
+                scanner.nextLine();
+                correcto = true;
+            } catch(InputMismatchException e){
+                System.out.println("El dato introducido no es un numero valido, intente otra vez.");
+                scanner.nextLine();
+            }
+        }
 
-        System.out.println("Monto Certificado: ");
-        double montoCertificado = scanner.nextDouble();
-        scanner.nextLine();
+        correcto = false;
+        while (!correcto){
+            try{
+                System.out.println("Monto Certificado: ");
+                montoCertificado = scanner.nextDouble();
+                scanner.nextLine();
+                correcto = true;
+            }catch(InputMismatchException e){
+                System.out.println("El dato introducido no es un numero valido, intente otra vez.");
+                scanner.nextLine();
+            }
+        }
 
         List<Material> materialesUtilizados = new ArrayList<>();
         do {
+            correcto = false;
             System.out.println("Ingrese el nombre del material utilizado: ");
             for (Material m : o.getMateriales().getListaMateriales()){
-                System.out.println("- " + m.getNombre()+ "\n");
+                System.out.println("- " + m.getNombre());
             }
             String nombreMaterial = scanner.nextLine();
             Material m = o.getMateriales().buscarMaterialPorNombre(nombreMaterial);
@@ -182,9 +301,18 @@ public class ScannerHandler {
             if(m != null){
                 materialesUtilizados.add(m);
 
-                System.out.println("Ingrese la cantidad de material consumida: ");
-                double cantidadConsumidaMaterial = scanner.nextDouble();
-                scanner.nextLine();
+                while (!correcto){
+                    try{
+                        System.out.println("Ingrese la cantidad de material consumida: ");
+                        cantidadConsumidaMaterial = scanner.nextDouble();
+                        scanner.nextLine();
+                        correcto = true;
+                    }catch(InputMismatchException e){
+                        System.out.println("Cantidad invalida. Intente nuevamente.");
+                        scanner.nextLine();
+                    }
+                }
+
                 if (m.getCantidadAcopiadaObra()>=cantidadConsumidaMaterial) {
                     m.consumirMaterial(cantidadConsumidaMaterial);
                 }

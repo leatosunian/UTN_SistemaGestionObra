@@ -96,15 +96,16 @@ public class Main {
                 case 2:
                     // eliminacion de obra
                     System.out.println("→ Eliminar obra...\n");
-                    System.out.print("Ingrese el nombre de la obra a eliminar: ");
+                    System.out.print("Ingrese el nombre de la obra a eliminar: \n");
+                    app.mostrarNombresObras();
                     app.eliminarPorNombre(scanner.nextLine().trim());
                     break;
                 case 3:
                     // agregar material a obra
                     System.out.println("→ Agregar material a obra...\n");
                     // buscar obra para agregar material
-                    System.out.print("Ingrese el nombre de la obra: ");
-
+                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    app.mostrarNombresObras();
                     Obra obra = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -123,7 +124,8 @@ public class Main {
                 case 4:
                     // eliminar material de obra
                     System.out.println("→ Eliminar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra: ");
+                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    app.mostrarNombresObras();
                     Obra o1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -138,7 +140,8 @@ public class Main {
                 case 5:
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra: ");
+                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    app.mostrarNombresObras();
                     Obra o = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -155,8 +158,8 @@ public class Main {
                     // crear certificado de avance
                     System.out.println("→ Crear certificado de avance...\n");
                     // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra: ");
-
+                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    app.mostrarNombresObras();
                     Obra obra1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -176,8 +179,8 @@ public class Main {
                     // consultar certificados de avance
                 System.out.println("→ Consultar certificados de avance...\n");
                 // buscar obra existente
-                System.out.print("Ingrese el nombre de la obra: ");
-
+                System.out.print("Ingrese el nombre de la obra:\n ");
+                app.mostrarNombresObras();
                 Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
 
                 // si la obra no existe, mostrar mensaje de error
@@ -224,7 +227,7 @@ public class Main {
                     // agregar material a obra
                     System.out.println("→ Agregar material a obra...\n");
                     // buscar obra para agregar material
-                    System.out.print("Ingrese el nombre de la obra: ");
+                    System.out.print("Ingrese el nombre de la obra:\n ");
 
                     Obra obra = app.buscarPorNombre(scanner.nextLine().trim());
 
@@ -244,7 +247,8 @@ public class Main {
                 case 2:
                     // eliminar material de obra
                     System.out.println("→ Eliminar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra: ");
+                    System.out.print("Ingrese el nombre de la obra: \n");
+                    app.mostrarNombresObras();
                     Obra o1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -259,7 +263,8 @@ public class Main {
                 case 3:
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra: ");
+                    System.out.print("Ingrese el nombre de la obra: \n");
+                    app.mostrarNombresObras();
                     Obra o = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -276,8 +281,8 @@ public class Main {
                     // crear certificado de avance
                     System.out.println("→ Crear certificado de avance...\n");
                     // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra: ");
-
+                    System.out.print("Ingrese el nombre de la obra: \n");
+                    app.mostrarNombresObras();
                     Obra obra1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -297,8 +302,8 @@ public class Main {
                     // consultar certificados de avance
                     System.out.println("→ Consultar certificados de avance...\n");
                     // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra: ");
-
+                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    app.mostrarNombresObras();
                     Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -328,7 +333,6 @@ public class Main {
         do {
             System.out.println("===== MENÚ INVERSOR =====");
             System.out.println("1. Consultar certificados de avance");
-            System.out.println("2. Exportar datos de obra en JSON");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -340,8 +344,8 @@ public class Main {
                     // consultar certificados de avance
                     System.out.println("→ Consultar certificados de avance...\n");
                     // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra: ");
-
+                    System.out.print("Ingrese el nombre de la obra: \n");
+                    app.mostrarNombresObras();
                     Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -351,10 +355,6 @@ public class Main {
                         obra2.getCertificados().mostrarCertificados();
                     }
                     break;
-                case 2:
-                    // exportar datos de obra en JSON
-                    manejoJSON.guardarApp(app);
-                    System.out.println("→ Exportar datos de obra en JSON...\n");
                 case 0:
                     System.out.println("Volviendo al menú principal...\n");
                     break;

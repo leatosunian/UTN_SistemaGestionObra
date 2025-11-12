@@ -27,6 +27,11 @@ public class App {
             this.obras.add(obra);
         }
     }
+    public void mostrarNombresObras() {
+        for (Obra obra : obras) {
+            System.out.println(obra.getNombre());
+        }
+    }
 
     public Obra buscarPorNombre(String nombre) {
         if (obras == null || nombre == null) return null;

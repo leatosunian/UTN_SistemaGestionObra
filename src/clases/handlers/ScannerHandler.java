@@ -4,6 +4,7 @@ import clases.CertificadoAvance;
 import clases.Material;
 import clases.Obra;
 import clases.exceptions.materialExceptions.MaterialInexistenteException;
+import clases.tiposMaterial.MaterialAcabado;
 import clases.tiposMaterial.MaterialElectrico;
 import clases.tiposMaterial.MaterialEstructural;
 import clases.tiposMaterial.MaterialFontaneria;
@@ -28,6 +29,9 @@ public class ScannerHandler {
         else {
             int opcion;
             do {
+
+                System.out.println("\n===== DATOS ACTUALES: =====");
+                System.out.println(material);
                 System.out.println("\n===== EDITAR MATERIAL: " + material.getNombre() + " =====");
                 System.out.println("1. Editar nombre");
                 System.out.println("2. Editar unidad de medida");
@@ -214,6 +218,7 @@ public class ScannerHandler {
         System.out.println("1. Fontanería");
         System.out.println("2. Estructural");
         System.out.println("3. Eléctrico");
+        System.out.println("4. Acabado");
         System.out.print("Opción: ");
         int opcion = scanner.nextInt();
         scanner.nextLine();
@@ -222,13 +227,16 @@ public class ScannerHandler {
 
         switch (opcion) {
             case 1:
-                nuevoMaterial = new MaterialFontaneria(nombre, unidadMedida, precioUnitario, cantTotal, cantObra, cantProv, cantCons, "FONTANERIA");
+                nuevoMaterial = new MaterialFontaneria(nombre, unidadMedida, precioUnitario, cantTotal, cantObra, cantProv, cantCons, "MaterialFontaneria");
                 break;
             case 2:
-                nuevoMaterial = new MaterialEstructural(nombre, unidadMedida, precioUnitario, cantTotal, cantObra, cantProv, cantCons, "ESTRUCTURAL");
+                nuevoMaterial = new MaterialEstructural(nombre, unidadMedida, precioUnitario, cantTotal, cantObra, cantProv, cantCons, "MaterialEstructural");
                 break;
             case 3:
-                nuevoMaterial = new MaterialElectrico(nombre, unidadMedida, precioUnitario, cantTotal, cantObra, cantProv, cantCons, "ELECTRICO");
+                nuevoMaterial = new MaterialElectrico(nombre, unidadMedida, precioUnitario, cantTotal, cantObra, cantProv, cantCons, "MaterialElectrico");
+                break;
+                case 4:
+                nuevoMaterial = new MaterialAcabado(nombre, unidadMedida, precioUnitario, cantTotal, cantObra, cantProv, cantCons, "MaterialAcabado");
                 break;
             default:
                 System.out.println("Opción inválida. No se creó el material.");
@@ -242,6 +250,11 @@ public class ScannerHandler {
 
     // Agregar certificado
     public static CertificadoAvance crearCertificado(Obra o){
+        if (o.getMateriales().getListaMateriales().isEmpty()){
+            System.out.println("Error, No hay Materiales Cargados en el Sistema.");
+            return null;
+        }
+
         Scanner scanner = new Scanner(System.in);
         char opcion='n';
         boolean correcto = false;

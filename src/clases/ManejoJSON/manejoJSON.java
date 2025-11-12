@@ -15,6 +15,7 @@ import clases.handlers.MaterialHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -82,6 +83,7 @@ public class manejoJSON {
 
             for (CertificadoAvance certificado : certificados.getCertificados()) {
                 JSONObject obj = new JSONObject();
+                obj.put("cantCertificados", CertificadoAvance.getCantCertificados());
                 obj.put("id", certificado.getId());
                 obj.put("fecha", certificado.getFecha().format(formatter));
                 obj.put("porcentajeAvance", certificado.getPorcentajeAvance());
@@ -131,7 +133,7 @@ public class manejoJSON {
                 obj.put("cantidadAcopiadaObra", material.getCantidadAcopiadaObra());
                 obj.put("cantidadEnProveedor", material.getCantidadEnProveedor());
                 obj.put("cantidadConsumida", material.getCantidadConsumida());
-                obj.put("cantidadFaltanteComprar", material.getCantidadFaltanteComprar());
+
                 array.put(obj);
             }
 
@@ -151,16 +153,31 @@ public class manejoJSON {
 
     public static App mapeoApp() {
         App app = new App();
+
         try {
+
             JSONObject json = new JSONObject(JSONUtiles.leer(ARCHIVO_OBRAS));
+
+
+            if (!json.has("app")) {
+                System.out.println("El archivo JSON no contiene datos válidos de 'app'. Se iniciará una nueva App.\n");
+                return app;
+            }
+
             JSONObject jApp = json.getJSONObject("app");
             app.setObras(jsonToObras(jApp));
+
             System.out.println("Obras cargadas correctamente desde " + ARCHIVO_OBRAS);
+
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            System.out.println("El archivo JSON está vacío o tiene formato inválido. Se iniciará una nueva App.\n");
+        } catch (Exception e) {
+            System.out.println("Error inesperado al leer el archivo JSON. Se iniciará una nueva App.\n");
         }
+
         return app;
     }
+
 
 
     public static List<Obra> jsonToObras(JSONObject jApp) {
@@ -238,7 +255,7 @@ public class manejoJSON {
         return handler;
     }
 
-    private static Material getMaterial(String tipoMaterial) throws JSONException {
+    private static Material getMaterial(String tipoMaterial) {
         return switch (tipoMaterial) {
             case "MaterialAcabado" -> new MaterialAcabado();
 
@@ -266,7 +283,7 @@ public class manejoJSON {
             JSONObject jCert = array.getJSONObject(i);
             CertificadoAvance certificado = new CertificadoAvance();
 
-
+            CertificadoAvance.setCantCertificados(jCert.optInt("cantCertificados", 1));
             certificado.setId(jCert.optInt("id", 0));
             String fechaStr = jCert.optString("fecha", "");
             if (!fechaStr.isEmpty()) {

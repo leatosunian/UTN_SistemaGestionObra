@@ -35,9 +35,7 @@ public class MaterialAcabado extends Material {
     @Override
     public String toString() {
         return "MaterialAcabado{" +
-                "id=" + getId() +
-                ", nombre='" + getNombre() + '\'' +
-                ", tipoMaterial='" + tipoMaterial + '\'' +
-                '}';
+                "tipoMaterial='" + tipoMaterial + "\n" +
+                "} " + super.toString();
     }
 }

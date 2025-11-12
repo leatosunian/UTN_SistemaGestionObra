@@ -16,7 +16,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+
         App app = manejoJSON.mapeoApp();
+
 
         // inicializar el handler de materiales
         MaterialHandler<Material> materialHandler = new MaterialHandler<>();
@@ -96,37 +98,54 @@ public class Main {
                 case 2:
                     // eliminacion de obra
                     System.out.println("→ Eliminar obra...\n");
+
+                    if (app.getObras().isEmpty()) {
+                        throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
+                    }
                     System.out.print("Ingrese el nombre de la obra a eliminar: \n");
                     app.mostrarNombresObras();
                     app.eliminarPorNombre(scanner.nextLine().trim());
                     manejoJSON.guardarApp(app);
                     break;
                 case 3:
-                    // agregar material a obra
                     System.out.println("→ Agregar material a obra...\n");
-                    // buscar obra para agregar material
-                    System.out.print("Ingrese el nombre de la obra:\n ");
-                    app.mostrarNombresObras();
-                    Obra obra = app.buscarPorNombre(scanner.nextLine().trim());
 
-                    // si la obra no existe, mostrar mensaje de error
-                    if (obra == null) {
-                        throw new ObraInexistenteException("La obra introducida no existe.\n");
-                    } else {
-                        // crear nuevo material
+
+                    if (app.getObras().isEmpty()) {
+                        throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
+                    }
+
+                    System.out.println("Ingrese el nombre de la obra:");
+                    app.mostrarNombresObras();
+                    String nombreObra = scanner.nextLine().trim();
+
+
+                    Obra obra = app.buscarPorNombre(nombreObra);
+
+                    if (obra != null) {
+
                         Material nuevoMaterial = ScannerHandler.crearMaterial();
 
-                        // agregar material a la obra
+
                         obra.getMateriales().agregarMaterial(nuevoMaterial);
 
-                        System.out.println("Material '" + nuevoMaterial.getNombre() + "' agregado a la obra '" + obra.getNombre() + "'.\n");
+                        System.out.println(" Material '" + nuevoMaterial.getNombre() +
+                                "' agregado a la obra '" + obra.getNombre() + "'.\n");
+
                         manejoJSON.guardarApp(app);
+                    } else {
+                        System.out.println("No se encontró ninguna obra con ese nombre.\n");
                     }
                     break;
+
                 case 4:
                     // eliminar material de obra
                     System.out.println("→ Eliminar material de obra...\n");
                     System.out.print("Ingrese el nombre de la obra:\n ");
+
+                    if (app.getObras().isEmpty()) {
+                        throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
+                    }
                     app.mostrarNombresObras();
                     Obra o1 = app.buscarPorNombre(scanner.nextLine().trim());
 
@@ -137,13 +156,19 @@ public class Main {
                         System.out.println("Ingrese el nombre del material a eliminar");
                         o1.getMateriales().eliminarPorNombre(scanner.nextLine().trim());
                         o1.getMateriales().mostrarMateriales();
-                        manejoJSON.guardarApp(app);
+                        if (!o1.getMateriales().getListaMateriales().isEmpty()) {
+                            manejoJSON.guardarApp(app);
+                        }
                     }
                     break;
                 case 5:
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
                     System.out.print("Ingrese el nombre de la obra:\n ");
+
+                    if (app.getObras().isEmpty()) {
+                        throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
+                    }
                     app.mostrarNombresObras();
                     Obra o = app.buscarPorNombre(scanner.nextLine().trim());
 
@@ -151,8 +176,10 @@ public class Main {
                     if (o == null) {
                         throw new ObraInexistenteException("La obra introducida no existe.\n");
                     } else {
-                        System.out.println("Ingrese el nombre del material a buscar");
-
+                        System.out.println("Ingrese el nombre del material a editar");
+                        for (Material material : o.getMateriales().getListaMateriales()) {
+                            System.out.println(material.getNombre());
+                        }
                         ScannerHandler.editarMaterial(o.getMateriales().buscarMaterialPorNombre(scanner.nextLine().trim()));
                         o.getMateriales().mostrarMateriales();
                         manejoJSON.guardarApp(app);
@@ -163,6 +190,10 @@ public class Main {
                     System.out.println("→ Crear certificado de avance...\n");
                     // buscar obra existente
                     System.out.print("Ingrese el nombre de la obra:\n ");
+
+                    if (app.getObras().isEmpty()) {
+                        throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
+                    }
                     app.mostrarNombresObras();
                     Obra obra1 = app.buscarPorNombre(scanner.nextLine().trim());
 
@@ -177,7 +208,9 @@ public class Main {
                         obra1.getCertificados().agregarCertificado(certif);
 
                         System.out.println("Certificado agregado a la obra '" + obra1.getNombre() + "'.\n");
+                        if (certif != null) {
                         manejoJSON.guardarApp(app);
+                        }
                     }
                     break;
                 case 7:
@@ -185,6 +218,10 @@ public class Main {
                 System.out.println("→ Consultar certificados de avance...\n");
                 // buscar obra existente
                 System.out.print("Ingrese el nombre de la obra:\n ");
+
+                    if (app.getObras().isEmpty()) {
+                        throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
+                    }
                 app.mostrarNombresObras();
                 Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
 

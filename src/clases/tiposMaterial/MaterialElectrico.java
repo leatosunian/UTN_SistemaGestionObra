@@ -33,9 +33,7 @@ public class MaterialElectrico extends Material {
     @Override
     public String toString() {
         return "MaterialElectrico{" +
-                "id=" + getId() +
-                ", nombre='" + getNombre() + '\'' +
-                ", tipoMaterial='" + tipoMaterial + '\'' +
-                '}';
+                "tipoMaterial='" + tipoMaterial + "\n" +
+                "} " + super.toString();
     }
 }

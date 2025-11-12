@@ -1,9 +1,7 @@
 package clases;
 
 public abstract class Material {
-    private static int cantMatsTotales = 1;
 
-    private int id;
     private String nombre;
     private String unidadMedida; // kg, m3, unidades,etc
     private double precioUnitario;
@@ -19,7 +17,6 @@ public abstract class Material {
     public Material(String nombre, String unidadMedida, double precioUnitario,
                     double cantidadEstimadaTotal, double cantidadAcopiadaObra, double cantidadEnProveedor,
                     double cantidadConsumida) {
-        this.id = cantMatsTotales++;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
         this.precioUnitario = precioUnitario;
@@ -27,22 +24,6 @@ public abstract class Material {
         this.cantidadAcopiadaObra = cantidadAcopiadaObra;
         this.cantidadEnProveedor = cantidadEnProveedor;
         this.cantidadConsumida = cantidadConsumida;
-    }
-
-    public static int getCantMatsTotales() {
-        return cantMatsTotales;
-    }
-
-    public static void setCantMatsTotales(int cantMatsTotales) {
-        Material.cantMatsTotales = cantMatsTotales;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -105,19 +86,21 @@ public abstract class Material {
         return cantidadEstimadaTotal - cantidadAcopiadaObra - cantidadEnProveedor - cantidadConsumida;
     }
 
-    public void recibirMaterial(double cantidad, boolean directoDelProveedor) {
-        this.cantidadAcopiadaObra += cantidad;
-        if (directoDelProveedor) {
-            this.cantidadEnProveedor -= cantidad;
-        }
-    }
-
     public void consumirMaterial(double cantidad) {
         this.cantidadConsumida += cantidad;
         this.cantidadAcopiadaObra -= cantidad;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Material{" + "\n" +
+                "nombre=" + nombre + "\n"+
+                " unidadMedida=" + unidadMedida + "\n" +
+                " precioUnitario=" + precioUnitario + "\n"+
+                " cantidadEstimadaTotal=" + cantidadEstimadaTotal + "\n"+
+                " cantidadAcopiadaObra=" + cantidadAcopiadaObra + "\n" +
+                " cantidadEnProveedor=" + cantidadEnProveedor + "\n" +
+                " cantidadConsumida=" + cantidadConsumida + "\n" +
+                '}';
+    }
 }

@@ -1,23 +1,50 @@
-{"app": [
-    {
-        "descripcion": "123",
-        "ubicacion": "asd",
-        "certificados": {"certificados": []},
-        "materiales": {"materiales": []},
-        "nombre": "asd"
-    },
-    {
-        "descripcion": "fs",
-        "ubicacion": "123",
-        "certificados": {"certificados": []},
-        "materiales": {"materiales": []},
-        "nombre": "asd"
-    },
-    {
-        "descripcion": "asd",
-        "ubicacion": "123",
-        "certificados": {"certificados": []},
-        "materiales": {"materiales": []},
-        "nombre": "fld"
-    }
-]}
+{"app": {"obras": [{
+    "descripcion": "20 Pisos con Vista al Mar",
+    "ubicacion": "Peralta Ramos y Gascon",
+    "certificados": {"certificados": [
+        {
+            "fecha": "2025-11-20",
+            "montoCertificado": 1000000,
+            "materialesUsados": [],
+            "porcentajeAvance": 50,
+            "descripcionTrabajo": "Se hicieron 10 pisos",
+            "id": 1
+        },
+        {
+            "fecha": "2025-12-25",
+            "montoCertificado": 50000,
+            "materialesUsados": [{
+                "cantidadUsada": 600,
+                "nombre": "Ladrillo"
+            }],
+            "porcentajeAvance": 10,
+            "descripcionTrabajo": "Se levanto una pared",
+            "id": 1
+        }
+    ]},
+    "materiales": {"materiales": [
+        {
+            "tipo": "MaterialEstructural",
+            "precioUnitario": 500,
+            "unidadMedida": "kg",
+            "cantidadEnProveedor": 300,
+            "cantidadAcopiadaObra": 100,
+            "cantidadConsumida": 600,
+            "nombre": "Ladrillo",
+            "cantidadEstimadaTotal": 1000,
+            "cantidadFaltanteComprar": 0
+        },
+        {
+            "tipo": "MaterialEstructural",
+            "precioUnitario": 800,
+            "unidadMedida": "L",
+            "cantidadEnProveedor": 500,
+            "cantidadAcopiadaObra": 2000,
+            "cantidadConsumida": 500,
+            "nombre": "Cemento",
+            "cantidadEstimadaTotal": 3000,
+            "cantidadFaltanteComprar": 0
+        }
+    ]},
+    "nombre": "Edificio"
+}]}}

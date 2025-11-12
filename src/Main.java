@@ -16,16 +16,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        App app = new App();
-      /*  try {
-            JSONObject japp= new JSONObject(JSONUtiles.leer("obras.json"));
-            if (japp.has("obras")) {
-            app = manejoJSON.cargarObras();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-*/
+        App app = manejoJSON.mapeoApp();
+
 
         // inicializar el handler de materiales
         MaterialHandler<Material> materialHandler = new MaterialHandler<>();
@@ -83,11 +75,9 @@ public class Main {
             System.out.println("5. Editar material");
             System.out.println("6. Crear certificado de avance");
             System.out.println("7. Consultar certificados de avance");
-            System.out.println("8. Exportar certificado de avance en JSON");
-            System.out.println("9. Exportar datos de obra en JSON");
+            System.out.println("8. Exportar datos de obra en JSON");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
-            scanner.nextLine();
             opcion = scanner.nextInt();
             scanner.nextLine();
             System.out.println();
@@ -198,10 +188,6 @@ public class Main {
                 }
                 break;
                 case 8:
-                    // exportar certificado de avance en JSON
-                    System.out.println("→ Exportar certificado de avance en JSON...\n");
-                    break;
-                case 9:
                     // exportar datos de obra en JSON
                             manejoJSON.guardarApp(app);
                     System.out.println("→ Exportar datos de obra en JSON...\n");

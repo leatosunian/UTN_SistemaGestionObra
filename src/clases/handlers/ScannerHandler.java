@@ -312,7 +312,7 @@ public class ScannerHandler {
             Material m = o.getMateriales().buscarMaterialPorNombre(nombreMaterial);
 
             if(m != null){
-                materialesUtilizados.add(m);
+
 
                 while (!correcto){
                     try{
@@ -328,6 +328,20 @@ public class ScannerHandler {
 
                 if (m.getCantidadAcopiadaObra()>=cantidadConsumidaMaterial) {
                     m.consumirMaterial(cantidadConsumidaMaterial);
+
+                    Material matCertificado = new MaterialAcabado(
+                            m.getNombre(),
+                            m.getUnidadMedida(),
+                            m.getPrecioUnitario(),
+                            0,
+                            0,
+                            0,
+                            cantidadConsumidaMaterial,
+                            "MaterialAcabado"
+                    );
+
+                    // Se agrega la copia simplificada al certificado
+                    materialesUtilizados.add(matCertificado);
                 }
                 else {
                     System.out.println("Error, La cantidad que se consumio es mayor a la acopiada");

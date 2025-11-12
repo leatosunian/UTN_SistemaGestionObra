@@ -146,9 +146,7 @@ public class manejoJSON {
     }
 
 
-
     /// FUNCIONES MAPEO ///
-
 
 
     public static App mapeoApp() {
@@ -157,7 +155,6 @@ public class manejoJSON {
         try {
 
             JSONObject json = new JSONObject(JSONUtiles.leer(ARCHIVO_OBRAS));
-
 
             if (!json.has("app")) {
                 System.out.println("El archivo JSON no contiene datos válidos de 'app'. Se iniciará una nueva App.\n");
@@ -174,10 +171,8 @@ public class manejoJSON {
         } catch (Exception e) {
             System.out.println("Error inesperado al leer el archivo JSON. Se iniciará una nueva App.\n");
         }
-
         return app;
     }
-
 
 
     public static List<Obra> jsonToObras(JSONObject jApp) {
@@ -206,28 +201,31 @@ public class manejoJSON {
 
         Obra obra = new Obra();
 
-        obra.setNombre(jObra.optString("nombre",""));
-        obra.setDescripcion(jObra.optString("descripcion",""));
+        obra.setNombre(jObra.optString("nombre", ""));
+        obra.setDescripcion(jObra.optString("descripcion", ""));
         obra.setUbicacion(jObra.optString("ubicacion", ""));
 
-        JSONObject jMateriales = jObra.getJSONObject("materiales");
-        obra.setMateriales(jsonToMateriales(jMateriales));
+        if (jObra.has("materiales")) {
+            JSONArray arrayMateriales = jObra.getJSONArray("materiales");
+            obra.setMateriales(jsonToMateriales(arrayMateriales));
+        }
 
-        JSONObject jCertificados = jObra.getJSONObject("certificados");
-        obra.setCertificados(jsonToCertificados(jCertificados));
+// Leer certificados (igual: puede venir como array directamente)
+        if (jObra.has("certificados")) {
+            JSONArray arrayCertificados = jObra.getJSONArray("certificados");
+            obra.setCertificados(jsonToCertificados(arrayCertificados));
+        }
 
         return obra;
     }
 
 
-    public static MaterialHandler<Material> jsonToMateriales(JSONObject jMateriales) throws JSONException {
-
+    public static MaterialHandler<Material> jsonToMateriales(JSONArray array) throws JSONException {
         List<Material> listaMateriales = new ArrayList<>();
-        JSONArray array = jMateriales.getJSONArray("materiales");
         MaterialHandler<Material> handler = new MaterialHandler<>();
+
         for (int i = 0; i < array.length(); i++) {
             JSONObject jMat = array.getJSONObject(i);
-
 
             String tipoMaterial = jMat.optString("tipo", "MaterialEstructural");
             Material material = getMaterial(tipoMaterial);
@@ -240,6 +238,7 @@ public class manejoJSON {
             material.setCantidadEnProveedor(jMat.optDouble("cantidadEnProveedor", 0.0));
             material.setCantidadConsumida(jMat.optDouble("cantidadConsumida", 0.0));
 
+            // Evita nulls con switch pattern
             switch (material) {
                 case MaterialAcabado m -> m.setTipoMaterial("MaterialAcabado");
                 case MaterialElectrico m -> m.setTipoMaterial("MaterialElectrico");
@@ -251,6 +250,7 @@ public class manejoJSON {
 
             listaMateriales.add(material);
         }
+
         handler.setListaMateriales(listaMateriales);
         return handler;
     }
@@ -265,50 +265,50 @@ public class manejoJSON {
 
             case "MaterialFontaneria" -> new MaterialFontaneria();
 
-            default ->
-                    throw new TipoMaterialInexistenteException("Tipo de material desconocido: " + tipoMaterial);
+            default -> throw new TipoMaterialInexistenteException("Tipo de material desconocido: " + tipoMaterial);
         };
     }
 
-    public static CertificadoHandler jsonToCertificados(JSONObject jCertificados) throws JSONException {
+    public static CertificadoHandler jsonToCertificados(JSONArray arrayCertificados) throws JSONException {
         CertificadoHandler handler = new CertificadoHandler();
 
-        if (!jCertificados.has("certificados")) return handler;
-
-        JSONArray array = jCertificados.getJSONArray("certificados");
+        if (arrayCertificados == null) return handler;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject jCert = array.getJSONObject(i);
+        for (int i = 0; i < arrayCertificados.length(); i++) {
+            JSONObject jCert = arrayCertificados.getJSONObject(i);
             CertificadoAvance certificado = new CertificadoAvance();
 
             CertificadoAvance.setCantCertificados(jCert.optInt("cantCertificados", 1));
             certificado.setId(jCert.optInt("id", 0));
+
             String fechaStr = jCert.optString("fecha", "");
             if (!fechaStr.isEmpty()) {
                 certificado.setFecha(LocalDate.parse(fechaStr, formatter));
             }
+
             certificado.setPorcentajeAvance(jCert.optDouble("porcentajeAvance", 0.0));
             certificado.setMontoCertificado(jCert.optDouble("montoCertificado", 0.0));
             certificado.setDescripcionTrabajo(jCert.optString("descripcionTrabajo", ""));
 
-
+            // Cargar materiales usados (nombre + cantidad consumida)
             List<Material> materialesUsados = new ArrayList<>();
-            JSONArray jMaterialesUsados = jCert.optJSONArray("materialesUsados");
+            JSONArray jMaterialesUsados = jCert.optJSONArray("materiales");
+
             if (jMaterialesUsados != null) {
                 for (int j = 0; j < jMaterialesUsados.length(); j++) {
                     JSONObject jMat = jMaterialesUsados.getJSONObject(j);
 
-                    Material m = new MaterialEstructural();
+                    Material m = new MaterialEstructural(); // tipo base, solo guardás nombre + consumida
                     m.setNombre(jMat.optString("nombre", ""));
-                    m.setCantidadConsumida(jMat.optDouble("cantidadUsada", 0.0));
+                    m.setCantidadConsumida(jMat.optDouble("cantidadConsumida", 0.0));
 
                     materialesUsados.add(m);
                 }
             }
-            certificado.setMateriales(materialesUsados);
 
+            certificado.setMateriales(materialesUsados);
             handler.agregarCertificado(certificado);
         }
 

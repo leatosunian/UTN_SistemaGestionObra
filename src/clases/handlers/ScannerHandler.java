@@ -3,6 +3,7 @@ package clases.handlers;
 import clases.CertificadoAvance;
 import clases.Material;
 import clases.Obra;
+import clases.exceptions.materialExceptions.CantidadExcedidaException;
 import clases.exceptions.materialExceptions.MaterialInexistenteException;
 import clases.tiposMaterial.MaterialAcabado;
 import clases.tiposMaterial.MaterialElectrico;
@@ -82,54 +83,63 @@ public class ScannerHandler {
                         }
                         break;
                     case 5:
-                        while (!correcto){
-                            try{
+                        while (!correcto) {
+                            try {
                                 System.out.print("Nueva cantidad acopiada en obra: ");
                                 material.setCantidadAcopiadaObra(scanner.nextDouble());
                                 scanner.nextLine();
                                 correcto = true;
-                            }catch (InputMismatchException e){
+                            } catch (InputMismatchException e) {
                                 System.out.println("Cantidad invalida. Intente nuevamente.");
                                 scanner.nextLine();
+                            } catch (CantidadExcedidaException e) {
+                                System.out.println("Error: " + e.getMessage());
                             }
                         }
                         break;
+
                     case 6:
-                        while (!correcto){
-                            try{
+                        while (!correcto) {
+                            try {
                                 System.out.print("Nueva cantidad en proveedor: ");
                                 material.setCantidadEnProveedor(scanner.nextDouble());
                                 scanner.nextLine();
                                 correcto = true;
-                            }catch (InputMismatchException e){
+                            } catch (InputMismatchException e) {
                                 System.out.println("Cantidad invalida. Intente nuevamente.");
                                 scanner.nextLine();
+                            } catch (CantidadExcedidaException e) {
+                                System.out.println("Error: " + e.getMessage());
                             }
                         }
                         break;
+
                     case 7:
-                        while (!correcto){
-                            try{
+                        while (!correcto) {
+                            try {
                                 System.out.print("Nueva cantidad consumida: ");
                                 material.setCantidadConsumida(scanner.nextDouble());
                                 scanner.nextLine();
                                 correcto = true;
-                            }catch (InputMismatchException e){
+                            } catch (InputMismatchException e) {
                                 System.out.println("Cantidad invalida. Intente nuevamente.");
                                 scanner.nextLine();
+                            } catch (CantidadExcedidaException e) {
+                                System.out.println("Error: " + e.getMessage());
                             }
                         }
                         break;
+
                     case 0:
                         System.out.println("Volviendo al menú anterior...");
                         break;
+
                     default:
                         System.out.println("Opción inválida. Intente nuevamente.");
                 }
             } while (opcion != 0);
 
             System.out.println("Cambios guardados correctamente.\n");
-
         }
     }
 
@@ -163,56 +173,91 @@ public class ScannerHandler {
         }
 
         correcto = false;
-        while (!correcto){
-            try{
+        while (!correcto) {
+            try {
                 System.out.print("Cantidad estimada total: ");
                 cantTotal = scanner.nextDouble();
                 scanner.nextLine();
                 correcto = true;
-            }catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Cantidad invalida. Intente nuevamente");
                 scanner.nextLine();
             }
         }
 
         correcto = false;
-        while (!correcto){
-            try{
+        while (!correcto) {
+            try {
                 System.out.print("Cantidad acopiada en obra: ");
                 cantObra = scanner.nextDouble();
                 scanner.nextLine();
+
+                // Validar la suma parcial antes de continuar
+                if (cantObra > cantTotal) {
+                    throw new CantidadExcedidaException(
+                            "La cantidad acopiada no puede superar la cantidad estimada total."
+                    );
+                }
+
                 correcto = true;
-            }catch (InputMismatchException e){
+
+            } catch (InputMismatchException e) {
                 System.out.println("Cantidad invalida. Intente nuevamente");
                 scanner.nextLine();
+
+            } catch (CantidadExcedidaException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
 
         correcto = false;
-        while (!correcto){
-            try{
+        while (!correcto) {
+            try {
                 System.out.print("Cantidad en proveedor: ");
                 cantProv = scanner.nextDouble();
                 scanner.nextLine();
+
+                if (cantObra + cantProv > cantTotal) {
+                    throw new CantidadExcedidaException(
+                            "La suma de acopiada + proveedor supera la cantidad estimada total."
+                    );
+                }
+
                 correcto = true;
-            }catch (InputMismatchException e){
+
+            } catch (InputMismatchException e) {
                 System.out.println("Cantidad invalida. Intente nuevamente");
                 scanner.nextLine();
+
+            } catch (CantidadExcedidaException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
 
         correcto = false;
-        while (!correcto){
-            try{
+        while (!correcto) {
+            try {
                 System.out.print("Cantidad consumida: ");
                 cantCons = scanner.nextDouble();
-                scanner.nextLine(); // limpiar buffer
+                scanner.nextLine();
+
+                if (cantObra + cantProv + cantCons > cantTotal) {
+                    throw new CantidadExcedidaException(
+                            "La suma de acopiada + proveedor + consumida supera la cantidad estimada total."
+                    );
+                }
+
                 correcto = true;
-            }catch (InputMismatchException e){
+
+            } catch (InputMismatchException e) {
                 System.out.println("Cantidad invalida. Intente nuevamente");
                 scanner.nextLine();
+
+            } catch (CantidadExcedidaException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
+
 
         System.out.println("\nSeleccione el tipo de material:");
         System.out.println("1. Fontanería");

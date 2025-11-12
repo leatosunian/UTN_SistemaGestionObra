@@ -1,5 +1,7 @@
 package clases;
 
+import clases.exceptions.materialExceptions.CantidadExcedidaException;
+
 public abstract class Material {
 
     private String nombre;
@@ -63,14 +65,27 @@ public abstract class Material {
     }
 
     public void setCantidadAcopiadaObra(double cantidadAcopiadaObra) {
+        if (cantidadAcopiadaObra + this.cantidadEnProveedor + this.cantidadConsumida > this.cantidadEstimadaTotal) {
+            throw new CantidadExcedidaException(
+                    "La suma de acopiada + proveedor + consumida supera la cantidad estimada total del material: " + nombre
+            );
+        }
         this.cantidadAcopiadaObra = cantidadAcopiadaObra;
     }
+
 
     public double getCantidadEnProveedor() {
         return cantidadEnProveedor;
     }
 
     public void setCantidadEnProveedor(double cantidadEnProveedor) {
+        double total = this.cantidadAcopiadaObra + cantidadEnProveedor + this.cantidadConsumida;
+        if (total > this.cantidadEstimadaTotal) {
+            throw new CantidadExcedidaException(
+                    "Error: la suma de cantidades supera la estimada total del material '" + nombre + "'. " +
+                            "Total actual: " + total + " | Estimada: " + cantidadEstimadaTotal
+            );
+        }
         this.cantidadEnProveedor = cantidadEnProveedor;
     }
 
@@ -79,6 +94,13 @@ public abstract class Material {
     }
 
     public void setCantidadConsumida(double cantidadConsumida) {
+        double total = this.cantidadAcopiadaObra + this.cantidadEnProveedor + cantidadConsumida;
+        if (total > this.cantidadEstimadaTotal) {
+            throw new CantidadExcedidaException(
+                    "Error: la suma de cantidades supera la estimada total del material '" + nombre + "'. " +
+                            "Total actual: " + total + " | Estimada: " + cantidadEstimadaTotal
+            );
+        }
         this.cantidadConsumida = cantidadConsumida;
     }
 

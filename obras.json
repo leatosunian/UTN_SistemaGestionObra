@@ -66,6 +66,17 @@
             "nombre": "Arena",
             "cantidadEstimadaTotal": 1000,
             "cantidadFaltanteComprar": 0
+        },
+        {
+            "tipo": "MaterialElectrico",
+            "precioUnitario": 400,
+            "unidadMedida": "m",
+            "cantidadEnProveedor": 300,
+            "cantidadAcopiadaObra": 500,
+            "cantidadConsumida": 200,
+            "nombre": "Cable 2.5m",
+            "cantidadEstimadaTotal": 1000,
+            "cantidadFaltanteComprar": 0
         }
     ]},
     "nombre": "Edificio"

@@ -73,7 +73,6 @@ public class Main {
             System.out.println("5. Editar material");
             System.out.println("6. Crear certificado de avance");
             System.out.println("7. Consultar certificados de avance");
-            System.out.println("8. Exportar datos de obra en JSON");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -89,6 +88,7 @@ public class Main {
                     if (nuevaObra !=  null) {
                         app.agregarObra(nuevaObra);
                         System.out.println("Obra '" + nuevaObra.getNombre() + "' creada correctamente.\n");
+                        manejoJSON.guardarApp(app);
                     } else {
                         throw new ObraInexistenteException("Error al crear la obra.\n");
                     }
@@ -99,6 +99,7 @@ public class Main {
                     System.out.print("Ingrese el nombre de la obra a eliminar: \n");
                     app.mostrarNombresObras();
                     app.eliminarPorNombre(scanner.nextLine().trim());
+                    manejoJSON.guardarApp(app);
                     break;
                 case 3:
                     // agregar material a obra
@@ -119,6 +120,7 @@ public class Main {
                         obra.getMateriales().agregarMaterial(nuevoMaterial);
 
                         System.out.println("Material '" + nuevoMaterial.getNombre() + "' agregado a la obra '" + obra.getNombre() + "'.\n");
+                        manejoJSON.guardarApp(app);
                     }
                     break;
                 case 4:
@@ -135,8 +137,9 @@ public class Main {
                         System.out.println("Ingrese el nombre del material a eliminar");
                         o1.getMateriales().eliminarPorNombre(scanner.nextLine().trim());
                         o1.getMateriales().mostrarMateriales();
-                        break;
+                        manejoJSON.guardarApp(app);
                     }
+                    break;
                 case 5:
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
@@ -152,8 +155,9 @@ public class Main {
 
                         ScannerHandler.editarMaterial(o.getMateriales().buscarMaterialPorNombre(scanner.nextLine().trim()));
                         o.getMateriales().mostrarMateriales();
-                        break;
+                        manejoJSON.guardarApp(app);
                     }
+                    break;
                 case 6:
                     // crear certificado de avance
                     System.out.println("→ Crear certificado de avance...\n");
@@ -173,6 +177,7 @@ public class Main {
                         obra1.getCertificados().agregarCertificado(certif);
 
                         System.out.println("Certificado agregado a la obra '" + obra1.getNombre() + "'.\n");
+                        manejoJSON.guardarApp(app);
                     }
                     break;
                 case 7:
@@ -190,11 +195,6 @@ public class Main {
                     obra2.getCertificados().mostrarCertificados();
                 }
                 break;
-                case 8:
-                    // exportar datos de obra en JSON
-                    manejoJSON.guardarApp(app);
-                    System.out.println("→ Exportar datos de obra en JSON...\n");
-                    break;
                 case 0:
                     // volver al menú principal
                     System.out.println("Volviendo al menú principal...\n");
@@ -215,7 +215,6 @@ public class Main {
             System.out.println("3. Editar material");
             System.out.println("4. Crear certificado de avance");
             System.out.println("5. Consultar certificados de avance");
-            System.out.println("6. Exportar datos de obra en JSON");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -242,6 +241,7 @@ public class Main {
                         obra.getMateriales().agregarMaterial(nuevoMaterial);
 
                         System.out.println("Material '" + nuevoMaterial.getNombre() + "' agregado a la obra '" + obra.getNombre() + "'.\n");
+                        manejoJSON.guardarApp(app);
                     }
                     break;
                 case 2:
@@ -258,8 +258,9 @@ public class Main {
                         System.out.println("Ingrese el nombre del material a eliminar");
                         o1.getMateriales().eliminarPorNombre(scanner.nextLine().trim());
                         o1.getMateriales().mostrarMateriales();
-                        break;
+                        manejoJSON.guardarApp(app);
                     }
+                    break;
                 case 3:
                     // editar material de obra
                     System.out.println("→ Editar material de obra...\n");
@@ -275,8 +276,9 @@ public class Main {
 
                         ScannerHandler.editarMaterial(o.getMateriales().buscarMaterialPorNombre(scanner.nextLine().trim()));
                         o.getMateriales().mostrarMateriales();
-                        break;
+                        manejoJSON.guardarApp(app);
                     }
+                    break;
                 case 4:
                     // crear certificado de avance
                     System.out.println("→ Crear certificado de avance...\n");
@@ -296,6 +298,7 @@ public class Main {
                         obra1.getCertificados().agregarCertificado(certif);
 
                         System.out.println("Certificado agregado a la obra '" + obra1.getNombre() + "'.\n");
+                        manejoJSON.guardarApp(app);
                     }
                     break;
                 case 5:
@@ -312,11 +315,6 @@ public class Main {
                     } else {
                         obra2.getCertificados().mostrarCertificados();
                     }
-                    break;
-                case 6:
-                    // exportar datos de obra en JSON
-                    manejoJSON.guardarApp(app);
-                    System.out.println("→ Exportar datos de obra en JSON...\n");
                     break;
                 case 0:
                     System.out.println("Volviendo al menú principal...\n");

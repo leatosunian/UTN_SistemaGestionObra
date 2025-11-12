@@ -1,8 +1,9 @@
 package clases.tiposMaterial;
 
+import clases.Interfaces.Mantenible;
 import clases.Material;
 
-public class MaterialElectrico extends Material {
+public class MaterialElectrico extends Material implements Mantenible {
     private String tipoMaterial;
 
     public MaterialElectrico(
@@ -30,6 +31,15 @@ public class MaterialElectrico extends Material {
         this.tipoMaterial = tipoMaterial;
     }
 
+    @Override
+    public void realizarMantenimiento() {
+        System.out.println("Verificando conexiones y aislantes del material eléctrico: " + getNombre());
+    }
+
+    @Override
+    public int obtenerFrecuenciaMantenimiento() {
+        return 12; // cada 12 meses
+    }
     @Override
     public String toString() {
         return "MaterialElectrico{" +

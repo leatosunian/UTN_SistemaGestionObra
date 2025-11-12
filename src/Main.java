@@ -1,5 +1,6 @@
 import clases.App;
 import clases.CertificadoAvance;
+import clases.Interfaces.Mantenible;
 import clases.ManejoJSON.JSONUtiles;
 import clases.ManejoJSON.manejoJSON;
 import clases.Material;
@@ -252,6 +253,7 @@ public class Main {
             System.out.println("3. Editar material");
             System.out.println("4. Crear certificado de avance");
             System.out.println("5. Consultar certificados de avance");
+            System.out.println("6. Realizar mantenimiento de materiales");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -264,7 +266,7 @@ public class Main {
                     System.out.println("→ Agregar material a obra...\n");
                     // buscar obra para agregar material
                     System.out.print("Ingrese el nombre de la obra:\n ");
-
+                    app.mostrarNombresObras();
                     Obra obra = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -353,6 +355,38 @@ public class Main {
                         obra2.getCertificados().mostrarCertificados();
                     }
                     break;
+                case 6:
+                    // realizar mantenimiento sobre materiales mantenibles
+                    System.out.println("→ Realizar mantenimiento de materiales...\n");
+                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    app.mostrarNombresObras();
+                    Obra obraM = app.buscarPorNombre(scanner.nextLine().trim());
+
+                    if (obraM == null) {
+                        throw new ObraInexistenteException("La obra introducida no existe.\n");
+                    } else {
+                        System.out.println("\nMateriales mantenibles en la obra '" + obraM.getNombre() + "':\n");
+
+                        boolean hayMantenibles = false;
+
+                        for (Material m : obraM.getMateriales().getListaMateriales()) {
+                            if (m instanceof Mantenible mantenible) {
+                                hayMantenibles = true;
+                                System.out.println("• " + m.getNombre());
+                                mantenible.realizarMantenimiento();
+                                System.out.println("  Frecuencia de mantenimiento: cada "
+                                        + mantenible.obtenerFrecuenciaMantenimiento() + " meses.\n");
+                            }
+                        }
+
+                        if (!hayMantenibles) {
+                            System.out.println("No hay materiales que requieran mantenimiento en esta obra.\n");
+                        }
+
+                        manejoJSON.guardarApp(app);
+                    }
+                    break;
+
                 case 0:
                     System.out.println("Volviendo al menú principal...\n");
                     break;

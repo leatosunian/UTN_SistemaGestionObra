@@ -39,6 +39,16 @@
             "cantidadConsumida": 100,
             "nombre": "Cemento",
             "cantidadEstimadaTotal": 500
+        },
+        {
+            "tipo": "MaterialElectrico",
+            "precioUnitario": 500,
+            "unidadMedida": "m",
+            "cantidadEnProveedor": 400,
+            "cantidadAcopiadaObra": 6000,
+            "cantidadConsumida": 0,
+            "nombre": "Cable 2.5m",
+            "cantidadEstimadaTotal": 10000
         }
     ]},
     "nombre": "Edificio"

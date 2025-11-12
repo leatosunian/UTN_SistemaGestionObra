@@ -1,8 +1,9 @@
 package clases.tiposMaterial;
 
+import clases.Interfaces.Mantenible;
 import clases.Material;
 
-public class MaterialFontaneria extends Material {
+public class MaterialFontaneria extends Material implements Mantenible {
     private String tipoMaterial;
 
     public MaterialFontaneria(
@@ -19,7 +20,9 @@ public class MaterialFontaneria extends Material {
                 cantidadEstimadaTotal, cantidadAcopiadaObra, cantidadEnProveedor, cantidadConsumida);
         this.tipoMaterial = tipoMaterial;
     }
+    public MaterialFontaneria() {
 
+    }
     public String getTipoMaterial() {
         return tipoMaterial;
     }
@@ -29,11 +32,18 @@ public class MaterialFontaneria extends Material {
     }
 
     @Override
+    public void realizarMantenimiento() {
+        System.out.println("Revisando fugas y limpiando válvulas del material: " + getNombre());
+    }
+
+    @Override
+    public int obtenerFrecuenciaMantenimiento() {
+        return 6; // cada 6 meses
+    }
+    @Override
     public String toString() {
         return "MaterialFontaneria{" +
-                "id=" + getId() +
-                ", nombre='" + getNombre() + '\'' +
-                ", tipoMaterial='" + tipoMaterial + '\'' +
-                '}';
+                "tipoMaterial='" + tipoMaterial + "\n" +
+                "} " + super.toString();
     }
 }

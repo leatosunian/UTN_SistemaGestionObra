@@ -1,0 +1,103 @@
+{
+  "app": {
+    "obras": [
+      {
+        "descripcion": "10 pisos",
+        "ubicacion": "La costa",
+        "certificados": {
+          "certificados": [
+            {
+              "fecha": "2025-05-20",
+              "montoCertificado": 10000,
+              "materialesUsados": [
+                {
+                  "cantidadUsada": 100,
+                  "nombre": "Ladrillo"
+                },
+                {
+                  "cantidadUsada": 100,
+                  "nombre": "Cemento"
+                }
+              ],
+              "porcentajeAvance": 10,
+              "descripcionTrabajo": "Se levanto una pared",
+              "id": 1,
+              "cantCertificados": 4
+            },
+            {
+              "fecha": "2025-12-25",
+              "montoCertificado": 100000,
+              "materialesUsados": [
+                {
+                  "cantidadUsada": 200,
+                  "nombre": "Ladrillo"
+                },
+                {
+                  "cantidadUsada": 300,
+                  "nombre": "Cemento"
+                }
+              ],
+              "porcentajeAvance": 10,
+              "descripcionTrabajo": "Se levantaron 3 paredes",
+              "id": 2,
+              "cantCertificados": 4
+            },
+            {
+              "fecha": "2025-12-31",
+              "montoCertificado": 40000,
+              "materialesUsados": [
+                {
+                  "cantidadUsada": 200,
+                  "nombre": "Cable 2.5m"
+                },
+                {
+                  "cantidadUsada": 100,
+                  "nombre": "Ladrillo"
+                }
+              ],
+              "porcentajeAvance": 10,
+              "descripcionTrabajo": "Instalacion electrica del Hall",
+              "id": 3,
+              "cantCertificados": 4
+            }
+          ]
+        },
+        "materiales": {
+          "materiales": [
+            {
+              "tipo": "MaterialEstructural",
+              "precioUnitario": 300,
+              "unidadMedida": "kg",
+              "cantidadEnProveedor": 0,
+              "cantidadAcopiadaObra": 9700,
+              "cantidadConsumida": 400,
+              "nombre": "Ladrillo",
+              "cantidadEstimadaTotal": 20000
+            },
+            {
+              "tipo": "MaterialAcabado",
+              "precioUnitario": 500,
+              "unidadMedida": "L",
+              "cantidadEnProveedor": 0,
+              "cantidadAcopiadaObra": 3000,
+              "cantidadConsumida": 400,
+              "nombre": "Cemento",
+              "cantidadEstimadaTotal": 5000
+            },
+            {
+              "tipo": "MaterialElectrico",
+              "precioUnitario": 500,
+              "unidadMedida": "m",
+              "cantidadEnProveedor": 400,
+              "cantidadAcopiadaObra": 5800,
+              "cantidadConsumida": 200,
+              "nombre": "Cable 2.5m",
+              "cantidadEstimadaTotal": 10000
+            }
+          ]
+        },
+        "nombre": "Edificio"
+      }
+    ]
+  }
+}

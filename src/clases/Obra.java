@@ -1,5 +1,10 @@
 package clases;
 
+import clases.handlers.CertificadoHandler;
+import clases.handlers.MaterialHandler;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,26 +12,32 @@ public class Obra {
     private String nombre;
     private String descripcion;
     private String ubicacion;
-    private List<Material> materiales;
-    private List<CertificadoAvance> certificados;
+    private MaterialHandler<Material> materiales;
+    private CertificadoHandler certificados;
 
     // constructor
     public Obra() {
-        this.materiales = new ArrayList<>();
-        this.certificados = new ArrayList<>();
+        this.materiales = new MaterialHandler<>();
+
+        this.certificados = new CertificadoHandler();
     }
 
     // getters y setters
-    public List<Material> getMateriales() {
+
+
+    public MaterialHandler<Material> getMateriales() {
         return materiales;
     }
 
-    public void setMateriales(List<Material> materiales) {
+    public void setMateriales(MaterialHandler<Material> materiales) {
         this.materiales = materiales;
     }
 
-    public List<CertificadoAvance> getCertificados() {
+    public CertificadoHandler getCertificados() {
         return certificados;
+    }
+    public void setCertificados(CertificadoHandler certificados) {
+        this.certificados = certificados;
     }
 
     public String getNombre() {
@@ -53,14 +64,10 @@ public class Obra {
         this.ubicacion = ubicacion;
     }
 
-    public void setCertificados(List<CertificadoAvance> certificados) {
-        this.certificados = certificados;
+
     }
 
-    // Agregar material
-    public void agregarMaterial(Material material) {
-        this.materiales.add(material);
-        System.out.println("Material agregado correctamente.\n");
-    }
 
-}
+
+
+

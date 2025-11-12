@@ -19,6 +19,9 @@ public class MaterialAcabado extends Material {
                 cantidadEstimadaTotal, cantidadAcopiadaObra, cantidadEnProveedor, cantidadConsumida);
         this.tipoMaterial = tipoMaterial;
     }
+    public MaterialAcabado() {
+
+    }
 
     public String getTipoMaterial() {
         return tipoMaterial;
@@ -32,9 +35,7 @@ public class MaterialAcabado extends Material {
     @Override
     public String toString() {
         return "MaterialAcabado{" +
-                "id=" + getId() +
-                ", nombre='" + getNombre() + '\'' +
-                ", tipoMaterial='" + tipoMaterial + '\'' +
-                '}';
+                "tipoMaterial='" + tipoMaterial + "\n" +
+                "} " + super.toString();
     }
 }

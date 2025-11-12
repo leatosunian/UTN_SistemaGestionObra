@@ -2,7 +2,7 @@
 
 ## 🌟 Descripción del Proyecto
 
-Este proyecto es un Sistema de Gestión de Obra desarrollado en Java, enfocado en el control de materiales, proveedores y el progreso físico de una construcción a través de Certificados de Avance. Implementa un sistema de roles (Administrador, Usuario de Obra, Inversor) para diferenciar los permisos de acceso y manipulación de datos.
+Este proyecto es un Sistema de Gestión de Obra desarrollado en Java, enfocado en el control de materiales, proveedores y el progreso físico de una construcción a través de certificados de avance. Implementa un sistema de roles (Administrador, Usuario de Obra, Inversor) para diferenciar los permisos de acceso y manipulación de datos, utilizando archivos JSON para garantizar la persistencia de los datos de la aplicación.
 
 ## 🎯 Objetivos
 
@@ -18,18 +18,18 @@ Este proyecto es un Sistema de Gestión de Obra desarrollado en Java, enfocado e
 | **`App`** | Contenedor principal que administra la lista de proyectos (`Obra`). | Agregación de `Obra`s. |
 | **`Obra`** | Entidad central del proyecto de construcción. | Composición con `MaterialHandler` y `CertificadoHandler`. |
 | **`Material`** | Clase abstracta base para insumos (`MaterialEstructural`, `MaterialAcabado`, etc.). | Herencia. |
-| **`MaterialHandler`** | Gestiona las colecciones de materiales. | Genérica (`<T extends Material>`). |
+| **`MaterialHandler`** | Gestiona las colecciones de materiales y sus tipos. | Genérica (`<T extends Material>`). |
 | **`CertificadoAvance`** | Representa un documento de avance de obra. | Gestionado por `CertificadoHandler`. |
 
 ## 👥 Roles de Usuario y Permisos
 
 | Rol | Nivel de Acceso | Funcionalidades Clave (Menú) |
 | :--- | :--- | :--- |
-| **Administrador** | Total (Lectura/Escritura/Mantenimiento) | Creación de Obras, Gestión de Materiales/Certificados, Exportación, Gestión de Usuarios (lógica externa). |
+| **Administrador** | Total (Lectura/Escritura/Mantenimiento) | Creación de Obras, Gestión de Materiales/Certificados, Exportación de Datos de Obras. |
 | **Usuario de Obra** | Operativo (Lectura/Escritura limitada) | Carga, Edición y Consumo de Materiales, Emisión y Consulta de Certificados. |
 | **Inversor** | Consulta (Solo Lectura) | Consulta de Certificados de Avance |
 
-## 🛠️ Tecnologías y Requisitos
+## 🛠️ Tecnologías Utilizadas
 
 * **Lenguaje:** Java
 * **Dependencias Externas:**
@@ -45,7 +45,7 @@ Este proyecto es un Sistema de Gestión de Obra desarrollado en Java, enfocado e
     cd [nombre-del-repositorio]
     ```
 2.  **Compilar y Ejecutar:**
-    * *Si usas un IDE (ej. IntelliJ, Eclipse):* Importa el proyecto y ejecuta la clase `Main`.
+    * *Usando IDE (ej. IntelliJ, Eclipse):* Importá el proyecto y ejecutá la clase `Main`.
     * *Desde la consola:*
         ```bash
         # Compilar (ejemplo)
@@ -54,7 +54,7 @@ Este proyecto es un Sistema de Gestión de Obra desarrollado en Java, enfocado e
         java Main
         ```
 
-Una vez iniciado, el sistema presentará el **MENÚ PRINCIPAL** para seleccionar el rol de inicio de sesión.
+Una vez iniciado, el sistema presentará el **MENÚ PRINCIPAL** donde se selecciona el rol de inicio de sesión para continuar con las funcionalidades asignadas a cada tipo de usuario.
 
 ---
 

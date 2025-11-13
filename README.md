@@ -25,9 +25,9 @@ Este proyecto es un Sistema de Gestión de Obra desarrollado en Java, enfocado e
 
 | Rol | Nivel de Acceso | Funcionalidades Clave (Menú) |
 | :--- | :--- | :--- |
-| **Administrador** | Total (Lectura/Escritura/Mantenimiento) | Creación de Obras, Gestión de Materiales/Certificados, Exportación de Datos de Obras. |
+| **Administrador** | Total (Lectura/Escritura/Mantenimiento) | Creación de Obras, Gestión de Materiales/Emisión de Certificados. |
 | **Usuario de Obra** | Operativo (Lectura/Escritura limitada) | Carga, Edición y Consumo de Materiales, Emisión y Consulta de Certificados. |
-| **Inversor** | Consulta (Solo Lectura) | Consulta de Certificados de Avance |
+| **Inversor** | Consulta (Solo Lectura) | Consulta de Certificados de Avance. |
 
 ## 🛠️ Tecnologías Utilizadas
 

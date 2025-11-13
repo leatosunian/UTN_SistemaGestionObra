@@ -1,7 +1,6 @@
 import clases.App;
 import clases.CertificadoAvance;
 import clases.Interfaces.Mantenible;
-import clases.ManejoJSON.JSONUtiles;
 import clases.ManejoJSON.manejoJSON;
 import clases.Material;
 import clases.Obra;
@@ -9,21 +8,16 @@ import clases.exceptions.obraException.ObraInexistenteException;
 import clases.handlers.CertificadoHandler;
 import clases.handlers.MaterialHandler;
 import clases.handlers.ScannerHandler;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-
         App app = manejoJSON.mapeoApp();
-
 
         // inicializar el handler de materiales
         MaterialHandler<Material> materialHandler = new MaterialHandler<>();
-        CertificadoHandler certificadoHandler  = new CertificadoHandler();
+        CertificadoHandler certificadoHandler = new CertificadoHandler();
 
         Scanner scanner = new Scanner(System.in);
         int opcionPrincipal;
@@ -32,31 +26,41 @@ public class Main {
         System.out.println("\n===== SISTEMA DE GESTIÓN DE OBRA ===== \n");
 
         do {
-
-            System.out.println("===== MENÚ PRINCIPAL =====");
-            System.out.println("1. Ingresar como Administrador");
-            System.out.println("2. Ingresar como Usuario de Obra");
-            System.out.println("3. Ingresar como Inversor");
-            System.out.println("0. Salir");
+            System.out.println("\n--------------------------------------------");
+            System.out.println("      🏗️  SISTEMA DE GESTIÓN DE OBRA");
+            System.out.println("--------------------------------------------");
+            System.out.println("              MENÚ PRINCIPAL");
+            System.out.println("--------------------------------------------");
+            System.out.println(" 1. 👨‍💼  Administrador");
+            System.out.println(" 2. 👷  Usuario de Obra");
+            System.out.println(" 3. 💰  Inversor");
+            System.out.println(" 0. 🚪  Salir");
+            System.out.println("--------------------------------------------");
             System.out.print("Seleccione una opción: ");
+
             opcionPrincipal = scanner.nextInt();
             scanner.nextLine();
             System.out.println();
 
             switch (opcionPrincipal) {
                 case 1:
+                    // abre submenu administrador
                     menuAdministrador(scanner, materialHandler, app, certificadoHandler);
                     break;
                 case 2:
+                    // abre submenu usuario de obra
                     menuUsuarioObra(scanner, materialHandler, app, certificadoHandler);
                     break;
                 case 3:
-                    menuInversor(scanner,app);
+                    // abre submenu inversor
+                    menuInversor(scanner, app);
                     break;
                 case 0:
+                    // finalizar ejecución
                     System.out.println("Saliendo del sistema...");
                     break;
                 default:
+                    // opción inválida
                     System.out.println("Opción no válida. Intente nuevamente.\n");
             }
         } while (opcionPrincipal != 0);
@@ -68,16 +72,20 @@ public class Main {
     public static void menuAdministrador(Scanner scanner, MaterialHandler<Material> materialHandler, App app, CertificadoHandler certificadoHandler) {
         int opcion;
         do {
-            System.out.println("===== MENÚ ADMINISTRADOR =====");
-            System.out.println("1. Nueva obra");
-            System.out.println("2. Eliminar obra");
-            System.out.println("3. Cargar material");
-            System.out.println("4. Eliminar material");
-            System.out.println("5. Editar material");
-            System.out.println("6. Crear certificado de avance");
-            System.out.println("7. Consultar certificados de avance");
-            System.out.println("0. Volver al menú principal");
+            System.out.println("\n--------------------------------------------");
+            System.out.println("        👨‍💼  MENÚ ADMINISTRADOR");
+            System.out.println("--------------------------------------------");
+            System.out.println(" 1. 🏗️  Nueva obra");
+            System.out.println(" 2. 🗑️  Eliminar obra");
+            System.out.println(" 3. 📦  Cargar material");
+            System.out.println(" 4. ❌  Eliminar material");
+            System.out.println(" 5. ✏️  Editar material");
+            System.out.println(" 6. 📄  Crear certificado de avance");
+            System.out.println(" 7. 🔍  Consultar certificados de avance");
+            System.out.println(" 0. 🚪  Volver al menú principal");
+            System.out.println("--------------------------------------------");
             System.out.print("Seleccione una opción: ");
+
             opcion = scanner.nextInt();
             scanner.nextLine();
             System.out.println();
@@ -85,41 +93,51 @@ public class Main {
             switch (opcion) {
                 case 1:
                     // creacion de obra
-                    System.out.println("→ Crear nueva obra...\n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Crear nueva obra...");
+                    System.out.println("--------------------------------------------");
+
                     Obra nuevaObra = ScannerHandler.crearObra();
 
-                    if (nuevaObra !=  null) {
+                    if (nuevaObra != null) {
                         app.agregarObra(nuevaObra);
                         System.out.println("Obra '" + nuevaObra.getNombre() + "' creada correctamente.\n");
                         manejoJSON.guardarApp(app);
                     } else {
-                        throw new ObraInexistenteException("Error al crear la obra.\n");
+                        throw new ObraInexistenteException("\nError al crear la obra.\n");
                     }
                     break;
                 case 2:
                     // eliminacion de obra
-                    System.out.println("→ Eliminar obra...\n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Eliminar obra...");
+                    System.out.println("--------------------------------------------");
 
                     if (app.getObras().isEmpty()) {
                         throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
                     }
-                    System.out.print("Ingrese el nombre de la obra a eliminar: \n");
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+                    System.out.print("\nIngrese el nombre de la obra a eliminar: \n");
+
                     app.eliminarPorNombre(scanner.nextLine().trim());
                     manejoJSON.guardarApp(app);
                     break;
                 case 3:
-                    System.out.println("→ Agregar material a obra...\n");
-
+                    // agregar material a obra
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Agregar material a obra...");
+                    System.out.println("--------------------------------------------");
 
                     if (app.getObras().isEmpty()) {
                         throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
                     }
 
-                    System.out.println("Ingrese el nombre de la obra:");
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
-                    String nombreObra = scanner.nextLine().trim();
 
+                    System.out.println("\nIngrese el nombre de la obra:");
+                    String nombreObra = scanner.nextLine().trim();
 
                     Obra obra = app.buscarPorNombre(nombreObra);
 
@@ -141,13 +159,18 @@ public class Main {
 
                 case 4:
                     // eliminar material de obra
-                    System.out.println("→ Eliminar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Eliminar material de obra...");
+                    System.out.println("--------------------------------------------");
 
                     if (app.getObras().isEmpty()) {
                         throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
                     }
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra:\n ");
                     Obra o1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -164,13 +187,19 @@ public class Main {
                     break;
                 case 5:
                     // editar material de obra
-                    System.out.println("→ Editar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Editar material de obra...");
+                    System.out.println("--------------------------------------------");
+
 
                     if (app.getObras().isEmpty()) {
                         throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
                     }
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra:\n ");
                     Obra o = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -188,14 +217,19 @@ public class Main {
                     break;
                 case 6:
                     // crear certificado de avance
-                    System.out.println("→ Crear certificado de avance...\n");
-                    // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Crear certificado de avance...");
+                    System.out.println("--------------------------------------------");
 
                     if (app.getObras().isEmpty()) {
                         throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
                     }
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    // buscar obra existente
+                    System.out.print("\nIngrese el nombre de la obra:\n ");
                     Obra obra1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -210,29 +244,34 @@ public class Main {
 
                         System.out.println("Certificado agregado a la obra '" + obra1.getNombre() + "'.\n");
                         if (certif != null) {
-                        manejoJSON.guardarApp(app);
+                            manejoJSON.guardarApp(app);
                         }
                     }
                     break;
                 case 7:
                     // consultar certificados de avance
-                System.out.println("→ Consultar certificados de avance...\n");
-                // buscar obra existente
-                System.out.print("Ingrese el nombre de la obra:\n ");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Consultar certificados de avance...");
+                    System.out.println("--------------------------------------------");
 
                     if (app.getObras().isEmpty()) {
                         throw new ObraInexistenteException("No hay obras cargadas en el programa.\n");
                     }
-                app.mostrarNombresObras();
-                Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
 
-                // si la obra no existe, mostrar mensaje de error
-                if (obra2 == null) {
-                    throw new ObraInexistenteException("La obra introducida no existe.\n");
-                } else {
-                    obra2.getCertificados().mostrarCertificados();
-                }
-                break;
+                    // buscar obra existente
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
+                    app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra:\n ");
+                    Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
+
+                    // si la obra no existe, mostrar mensaje de error
+                    if (obra2 == null) {
+                        throw new ObraInexistenteException("\nLa obra introducida no existe.\n");
+                    } else {
+                        obra2.getCertificados().mostrarCertificados();
+                    }
+                    break;
                 case 0:
                     // volver al menú principal
                     System.out.println("Volviendo al menú principal...\n");
@@ -247,15 +286,19 @@ public class Main {
     public static void menuUsuarioObra(Scanner scanner, MaterialHandler<Material> materialHandler, App app, CertificadoHandler certificadoHandler) {
         int opcion;
         do {
-            System.out.println("===== MENÚ USUARIO DE OBRA =====");
-            System.out.println("1. Cargar material");
-            System.out.println("2. Eliminar material");
-            System.out.println("3. Editar material");
-            System.out.println("4. Crear certificado de avance");
-            System.out.println("5. Consultar certificados de avance");
-            System.out.println("6. Realizar mantenimiento de materiales");
-            System.out.println("0. Volver al menú principal");
+            System.out.println("\n--------------------------------------------");
+            System.out.println("        👷  MENÚ USUARIO DE OBRA");
+            System.out.println("--------------------------------------------");
+            System.out.println(" 1. 📦  Cargar material");
+            System.out.println(" 2. ❌  Eliminar material");
+            System.out.println(" 3. ✏️  Editar material");
+            System.out.println(" 4. 📄  Crear certificado de avance");
+            System.out.println(" 5. 🔍  Consultar certificados de avance");
+            System.out.println(" 6. 🧰  Realizar mantenimiento de materiales");
+            System.out.println(" 0. 🚪  Volver al menú principal");
+            System.out.println("--------------------------------------------");
             System.out.print("Seleccione una opción: ");
+
             opcion = scanner.nextInt();
             scanner.nextLine();
             System.out.println();
@@ -263,10 +306,16 @@ public class Main {
             switch (opcion) {
                 case 1:
                     // agregar material a obra
-                    System.out.println("→ Agregar material a obra...\n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Agregar material a obra...");
+                    System.out.println("--------------------------------------------");
+
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
+                    app.mostrarNombresObras();
+
                     // buscar obra para agregar material
                     System.out.print("Ingrese el nombre de la obra:\n ");
-                    app.mostrarNombresObras();
                     Obra obra = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -285,9 +334,14 @@ public class Main {
                     break;
                 case 2:
                     // eliminar material de obra
-                    System.out.println("→ Eliminar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra: \n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Eliminar material de obra...");
+                    System.out.println("--------------------------------------------");
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra: \n");
                     Obra o1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -302,9 +356,14 @@ public class Main {
                     break;
                 case 3:
                     // editar material de obra
-                    System.out.println("→ Editar material de obra...\n");
-                    System.out.print("Ingrese el nombre de la obra: \n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Editar material de obra...");
+                    System.out.println("--------------------------------------------");
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra: \n");
                     Obra o = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -320,10 +379,16 @@ public class Main {
                     break;
                 case 4:
                     // crear certificado de avance
-                    System.out.println("→ Crear certificado de avance...\n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Crear certificado de avance...");
+                    System.out.println("--------------------------------------------");
+
                     // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra: \n");
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra: \n");
                     Obra obra1 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -342,10 +407,15 @@ public class Main {
                     break;
                 case 5:
                     // consultar certificados de avance
-                    System.out.println("→ Consultar certificados de avance...\n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Consultar certificados de avance...");
+                    System.out.println("--------------------------------------------");
+
                     // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra:\n ");
                     Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error
@@ -357,9 +427,14 @@ public class Main {
                     break;
                 case 6:
                     // realizar mantenimiento sobre materiales mantenibles
-                    System.out.println("→ Realizar mantenimiento de materiales...\n");
-                    System.out.print("Ingrese el nombre de la obra:\n ");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Realizar mantenimiento de materiales...");
+                    System.out.println("--------------------------------------------");
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    System.out.print("\nIngrese el nombre de la obra:\n ");
                     Obra obraM = app.buscarPorNombre(scanner.nextLine().trim());
 
                     if (obraM == null) {
@@ -400,10 +475,14 @@ public class Main {
     public static void menuInversor(Scanner scanner, App app) {
         int opcion;
         do {
-            System.out.println("===== MENÚ INVERSOR =====");
-            System.out.println("1. Consultar certificados de avance");
-            System.out.println("0. Volver al menú principal");
+            System.out.println("\n--------------------------------------------");
+            System.out.println("          💰  MENÚ INVERSOR");
+            System.out.println("--------------------------------------------");
+            System.out.println(" 1. 🔍  Consultar certificados de avance");
+            System.out.println(" 0. 🚪  Volver al menú principal");
+            System.out.println("--------------------------------------------");
             System.out.print("Seleccione una opción: ");
+
             opcion = scanner.nextInt();
             scanner.nextLine();
             System.out.println();
@@ -411,10 +490,15 @@ public class Main {
             switch (opcion) {
                 case 1:
                     // consultar certificados de avance
-                    System.out.println("→ Consultar certificados de avance...\n");
-                    // buscar obra existente
-                    System.out.print("Ingrese el nombre de la obra: \n");
+                    System.out.println("\n--------------------------------------------");
+                    System.out.println("→ Consultar certificados de avance...");
+                    System.out.println("--------------------------------------------");
+
+                    System.out.println("==== TODAS LAS OBRAS ====\n");
                     app.mostrarNombresObras();
+
+                    // buscar obra existente
+                    System.out.print("\nIngrese el nombre de la obra: \n");
                     Obra obra2 = app.buscarPorNombre(scanner.nextLine().trim());
 
                     // si la obra no existe, mostrar mensaje de error

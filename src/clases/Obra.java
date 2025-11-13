@@ -23,8 +23,6 @@ public class Obra {
     }
 
     // getters y setters
-
-
     public MaterialHandler<Material> getMateriales() {
         return materiales;
     }

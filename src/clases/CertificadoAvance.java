@@ -16,10 +16,11 @@ public class CertificadoAvance { // documento de avance de obra
     private List<Material> materiales;
     private String descripcionTrabajo;
 
-
+    // constructor
     public CertificadoAvance() {
     }
 
+ // constructor con parametros
     public CertificadoAvance(LocalDate fecha, double porcentajeAvance, double montoCertificado, String descripcionTrabajo) {
         this.id = cantCertificados++;
         this.fecha = fecha;
@@ -29,6 +30,7 @@ public class CertificadoAvance { // documento de avance de obra
         this.descripcionTrabajo = descripcionTrabajo;
     }
 
+    // getters y setters
     public static int getCantCertificados() {
         return cantCertificados;
     }

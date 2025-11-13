@@ -22,17 +22,21 @@ public class App {
         this.obras = obras;
     }
 
+    // agregar una obra a la lista
     public void agregarObra(Obra obra) {
         if (obra != null) {
             this.obras.add(obra);
         }
     }
+
+    // mostrar nombres de todas las obras
     public void mostrarNombresObras() {
         for (Obra obra : obras) {
-            System.out.println(obra.getNombre());
+            System.out.println("- " + obra.getNombre());
         }
     }
 
+    // buscar una obra por su nombre
     public Obra buscarPorNombre(String nombre) {
         if (obras == null || nombre == null) return null;
         for (Obra obra : obras) {
@@ -43,6 +47,7 @@ public class App {
         return null;
     }
 
+    // eliminar una obra por su nombre
     public void eliminarPorNombre(String nombre) {
         ListIterator<Obra> iterator = obras.listIterator();
         boolean found = false;

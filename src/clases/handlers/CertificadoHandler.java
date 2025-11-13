@@ -56,7 +56,7 @@ public class CertificadoHandler {
             System.out.println("No hay certificados registrados en esta obra. \n");
             return;
         }
-        System.out.println("===== LISTA DE MATERIALES =====");
+        System.out.println("===== LISTADO DE CERTIFICADOS =====");
         for (CertificadoAvance c: certificados) {
             mostrarCertificado(c);
         }

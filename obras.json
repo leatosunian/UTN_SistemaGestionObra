@@ -1,45 +1,40 @@
-{
-  "app": {
-    "obras": [
-      {
-        "descripcion": "10 Pisos",
-        "ubicacion": "Centro",
-        "certificados": [
-          {
+{"app": {"obras": [{
+    "descripcion": "10 Pisos",
+    "ubicacion": "Centro",
+    "certificados": [
+        {
             "fecha": "2025-09-15",
             "montoCertificado": 50000,
-            "materialesUsados": [
-              {
-                "cantidadUsada": 1000,
-                "nombre": "Ladrillo"
-              },
-              {
-                "cantidadUsada": 1000,
-                "nombre": "Cemento"
-              }
-            ],
+            "materialesUsados": [],
             "porcentajeAvance": 10,
             "descripcionTrabajo": "Se levantaron 10 paredes",
             "id": 4,
-            "cantCertificados": 6
-          },
-          {
+            "cantCertificados": 7
+        },
+        {
             "fecha": "2025-10-20",
             "montoCertificado": 40000,
-            "materialesUsados": [
-              {
-                "cantidadUsada": 300,
-                "nombre": "Tuberias PVC 20"
-              }
-            ],
+            "materialesUsados": [],
             "porcentajeAvance": 10,
             "descripcionTrabajo": "Instalacion tuberias Hall",
             "id": 5,
-            "cantCertificados": 6
-          }
-        ],
-        "materiales": [
-          {
+            "cantCertificados": 7
+        },
+        {
+            "fecha": "2025-12-25",
+            "montoCertificado": 60000,
+            "materialesUsados": [{
+                "cantidadUsada": 300,
+                "nombre": "Pintura"
+            }],
+            "porcentajeAvance": 10,
+            "descripcionTrabajo": "Se dio la primer mano de pintura al Hall",
+            "id": 6,
+            "cantCertificados": 7
+        }
+    ],
+    "materiales": [
+        {
             "tipo": "MaterialEstructural",
             "precioUnitario": 500,
             "unidadMedida": "kg",
@@ -48,8 +43,8 @@
             "cantidadConsumida": 1000,
             "nombre": "Ladrillo",
             "cantidadEstimadaTotal": 10000
-          },
-          {
+        },
+        {
             "tipo": "MaterialAcabado",
             "precioUnitario": 400,
             "unidadMedida": "L",
@@ -58,8 +53,8 @@
             "cantidadConsumida": 1000,
             "nombre": "Cemento",
             "cantidadEstimadaTotal": 10000
-          },
-          {
+        },
+        {
             "tipo": "MaterialElectrico",
             "precioUnitario": 600,
             "unidadMedida": "m",
@@ -68,8 +63,8 @@
             "cantidadConsumida": 0,
             "nombre": "Cable 2.5m",
             "cantidadEstimadaTotal": 5000
-          },
-          {
+        },
+        {
             "tipo": "MaterialFontaneria",
             "precioUnitario": 700,
             "unidadMedida": "mm",
@@ -78,10 +73,17 @@
             "cantidadConsumida": 300,
             "nombre": "Tuberias PVC 20",
             "cantidadEstimadaTotal": 1000
-          }
-        ],
-        "nombre": "Edificio"
-      }
-    ]
-  }
-}
+        },
+        {
+            "tipo": "MaterialAcabado",
+            "precioUnitario": 500,
+            "unidadMedida": "L",
+            "cantidadEnProveedor": 700,
+            "cantidadAcopiadaObra": 0,
+            "cantidadConsumida": 300,
+            "nombre": "Pintura",
+            "cantidadEstimadaTotal": 2000
+        }
+    ],
+    "nombre": "Edificio"
+}]}}

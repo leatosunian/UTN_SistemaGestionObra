@@ -358,7 +358,18 @@ public class ScannerHandler {
 
             if(m != null){
 
+                boolean repetido = false;
+                for (Material mat : materialesUtilizados) {
+                    if (mat.getNombre().equalsIgnoreCase(nombreMaterial)) {
+                        repetido = true;
+                        break;
+                    }
+                }
 
+                if (repetido) {
+                    System.out.println("El material '" + nombreMaterial + "' ya fue agregado a este certificado.");
+                    continue; // vuelve al inicio del bucle para pedir otro material
+                }
                 while (!correcto){
                     try{
                         System.out.println("Ingrese la cantidad de material consumida: ");

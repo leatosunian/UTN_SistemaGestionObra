@@ -76,7 +76,7 @@ public class manejoJSON {
     }
 
 
-    public static JSONObject CertificadosToJSON(CertificadoHandler certificados) {
+    public static JSONArray CertificadosToJSON(CertificadoHandler certificados) {
         try {
             JSONArray array = new JSONArray();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -97,9 +97,8 @@ public class manejoJSON {
                 array.put(obj);
             }
 
-            JSONObject jsonFinal = new JSONObject();
-            jsonFinal.put("certificados", array);
-            return jsonFinal;
+
+            return array;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -119,7 +118,7 @@ public class manejoJSON {
     }
 
 
-    public static JSONObject MaterialesToJSON(MaterialHandler<Material> materiales) {
+    public static JSONArray MaterialesToJSON(MaterialHandler<Material> materiales) {
         JSONArray array = new JSONArray();
 
         try {
@@ -137,9 +136,8 @@ public class manejoJSON {
                 array.put(obj);
             }
 
-            JSONObject jsonFinal = new JSONObject();
-            jsonFinal.put("materiales", array);
-            return jsonFinal;
+
+            return array;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
